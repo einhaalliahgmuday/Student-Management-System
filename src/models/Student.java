@@ -28,6 +28,7 @@ public class Student {
 		this.address = address;
 	}
 	
+	//getters and setters
 	//ArrayList of Students per section
 	//name = firstName+middleName+lastName
 	//section = course+yearLevel+section

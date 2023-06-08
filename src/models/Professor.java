@@ -1,12 +1,16 @@
 package models;
 
+import java.util.*;
+
 public class Professor {
 
 	String facultyNo, password;
 	String firstName, middleName, lastName;
 	String email, contactNo, address;
 	
-	Professor(String facultyNo, String password, String firstName, String middleName, 
+	public ArrayList <FacultyLoad> facultyLoads = new ArrayList<>();
+	
+	public Professor(String facultyNo, String password, String firstName, String middleName, 
 			String lastName, String email, String contactNo, String address) {
 		
 		this.facultyNo = facultyNo;
