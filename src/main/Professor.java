@@ -74,4 +74,10 @@ public class Professor {
 		facultyLoads.add(facultyLoad);
 	}
 	
+	public void displayFacultyLoads() {
+		for (FacultyLoad facultyLoad : facultyLoads) {
+			System.out.println(facultyLoad);
+		}
+	}
+	
 }

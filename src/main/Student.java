@@ -13,6 +13,7 @@ public class Student {
 	
 	//OVERLOAD CONSTRUCTORS?
 	//those without middle name
+	//section code here and in the Section class
 	
 	Student(String studentNo, String firstName, String middleName, String lastName, 
 			char sex, int birthMonth, int birthDay, int birthYear, 

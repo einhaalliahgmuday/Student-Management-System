@@ -31,4 +31,9 @@ public class FacultyLoad {
 	public void setSchedule(String schedule) {
 		this.schedule = schedule;
 	}
+	
+	public String toString() {
+		return subject.getSubjectCode() + "	" + subject.getSubjectDescription() + "	" + section.getSectionCode()
+				+ "	" + schedule;
+	}
 }

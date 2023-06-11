@@ -37,7 +37,7 @@ public class Section {
 		classList.add(student);
 	}
 	
-	public void viewClassList() {
+	public void displayClassList() {
 		for(Student student : classList) {
 			System.out.println(student);
 		}

@@ -11,7 +11,7 @@ public class Main {
 		System.out.println("STUDENT MANAGEMENT SYSTEM");
 		System.out.println();
 		
-		Professor prof = new Professor("00214-BN-0", "123123", "Einha", "Genciana", "Muday", "einhaalliahgmuday", 
+		Professor prof = new Professor("2021-00214-BN-0", "123123", "Einha", "Genciana", "Muday", "einhaalliahgmuday", 
 				null, "Ganado, Binan");
 		
 		Section BSIT21 = new Section("BSIT", 2, 1);
@@ -24,16 +24,12 @@ public class Main {
 		Subject OOP = new Subject("COMP20083", "Object Oriented Programming");
 		
 		prof.addFacultyLoad(new FacultyLoad(OOP, BSIT21, "M 2:00PM-5:00PM"));
-		BSIT21.viewClassList();
+		BSIT21.displayClassList();
 		prof.addFacultyLoad(new FacultyLoad(OOP, DICT21, "T 2:00PM-5:00PM"));
 		
+		System.out.println();
+		
 		ArrayList<FacultyLoad> facultyLoads = prof.getFacultyLoads();
-		for(FacultyLoad fl : facultyLoads) {
-			System.out.println(fl.getSubjectCode());
-			System.out.println(fl.getSubjectDescription());
-			System.out.println(fl.getSectionCode());
-			System.out.println(fl.getSchedule());
-			System.out.println();
-		}		
+		prof.displayFacultyLoads();	
 	}
 }
