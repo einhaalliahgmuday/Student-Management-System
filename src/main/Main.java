@@ -1,8 +1,6 @@
 package main;
 
 import java.util.*;
-import models.*;
-import data.*;
 
 public class Main {
 
@@ -13,20 +11,29 @@ public class Main {
 		System.out.println("STUDENT MANAGEMENT SYSTEM");
 		System.out.println();
 		
-		Professor prof1 = new Professor("2021-00214-BN-0", "202100214BN0", "Einha Alliah", 
-				"Genciana", "Muday", "einhaalliahgmuday@gmail.com", "09123456789", 
-				"Binan City, Laguna");
+		Professor prof = new Professor("00214-BN-0", "123123", "Einha", "Genciana", "Muday", "einhaalliahgmuday", 
+				null, "Ganado, Binan");
 		
-		Subject COMP20083 = new Subject("COMP20083", "Object Oriented Programming");
+		Section BSIT21 = new Section("BSIT", 2, 1);
+		BSIT21.addStudent(new Student("2021-00214-BN-0", "Einha Alliah", "Genciana", "Muday", 
+				'F', 2003, 2, 19, "BSIT", 2, 1, "einhaalliahgmuday@gmail.com", "09123456789", "Ganado, Binan, Laguna"));
 		
-		prof1.facultyLoads.add(new FacultyLoad(COMP20083, "BSIT 2-1", "M 7:30NN-12:30PM"));
+		Section DICT21 = new Section("DICT", 2, 1);
 		
-		for (int i = 0; i < prof1.facultyLoads.size(); i++) {
-			
-			prof1.facultyLoads.get(i).DisplayFacultyLoad();
+		
+		Subject OOP = new Subject("COMP20083", "Object Oriented Programming");
+		
+		prof.addFacultyLoad(new FacultyLoad(OOP, BSIT21, "M 2:00PM-5:00PM"));
+		BSIT21.viewClassList();
+		prof.addFacultyLoad(new FacultyLoad(OOP, DICT21, "T 2:00PM-5:00PM"));
+		
+		ArrayList<FacultyLoad> facultyLoads = prof.getFacultyLoads();
+		for(FacultyLoad fl : facultyLoads) {
+			System.out.println(fl.getSubjectCode());
+			System.out.println(fl.getSubjectDescription());
+			System.out.println(fl.getSectionCode());
+			System.out.println(fl.getSchedule());
 			System.out.println();
-		}
-
+		}		
 	}
-
 }
