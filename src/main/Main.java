@@ -29,7 +29,6 @@ public class Main {
 		
 		System.out.println();
 		
-		ArrayList<FacultyLoad> facultyLoads = prof.getFacultyLoads();
 		prof.displayFacultyLoads();	
 	}
 }

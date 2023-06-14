@@ -37,6 +37,10 @@ public class Section {
 		classList.add(student);
 	}
 	
+	public void removeStudent(Student student) {
+		classList.remove(student);
+	}
+	
 	public void displayClassList() {
 		for(Student student : classList) {
 			System.out.println(student);

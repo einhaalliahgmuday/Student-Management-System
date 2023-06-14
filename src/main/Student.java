@@ -14,9 +14,11 @@ public class Student {
 	//OVERLOAD CONSTRUCTORS?
 	//those without middle name
 	//section code here and in the Section class
+	//remove address?
+	//date time for birthday
 	
 	Student(String studentNo, String firstName, String middleName, String lastName, 
-			char sex, int birthMonth, int birthDay, int birthYear, 
+			char sex, int birthYear, int birthMonth, int birthDay, 
 			String course, int year, int section, String email, String contactNo, String address) {
 		
 		this.studentNo = studentNo;
