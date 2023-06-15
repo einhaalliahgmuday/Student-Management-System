@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Student {
 	
 	private String studentNo;
@@ -11,11 +13,14 @@ public class Student {
 	private String contactNo;
 	private String address; 
 	
+	private ArrayList<Grade> grades = new ArrayList<Grade>();
+	
 	//OVERLOAD CONSTRUCTORS?
 	//those without middle name
 	//section code here and in the Section class
 	//remove address?
 	//date time for birthday
+	//has faculty code too? but is not needed in this program output
 	
 	Student(String studentNo, String firstName, String middleName, String lastName, 
 			char sex, int birthYear, int birthMonth, int birthDay, 

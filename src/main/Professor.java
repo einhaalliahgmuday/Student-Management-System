@@ -12,6 +12,9 @@ public class Professor {
 	private String address;
 	private ArrayList<FacultyLoad> facultyLoads  = new ArrayList<FacultyLoad>();
 	
+	//separate login credential?
+	//get student by
+	
 	public Professor(String facultyNo, String password, String firstName, String middleName, 
 			String lastName, String email, String contactNo, String address) {
 		

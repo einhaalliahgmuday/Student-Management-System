@@ -2,22 +2,39 @@ package main;
 
 public class FacultyLoad {
 
-	private Subject subject;
+	private int schoolYear, semester;
+	private String subjectCode, subjectDescription;
 	private Section section;
 	private String schedule;
+	private int totalMeetings;
 	
-	public FacultyLoad(Subject subject, Section section, String schedule) {
-		this.subject = subject;
+	//add professor as attribute?
+	
+	public FacultyLoad(int schoolYear, int semester, String subjectCode, String subjectDescription, 
+			Section section, String schedule) {
+		this.schoolYear = schoolYear;
+		this.semester = semester;
+		this.subjectCode = subjectCode;
+		this.subjectDescription = subjectDescription;
 		this.section = section;
 		this.schedule = schedule;
+		this.totalMeetings = 0;
+	}
+	
+	public int getSchoolYear() {
+		return schoolYear;
+	}
+	
+	public int getSemester() {
+		return semester;
 	}
 	
 	public String getSubjectCode() {
-		return subject.getSubjectCode();
+		return subjectCode;
 	}
 	
 	public String getSubjectDescription() {
-		return subject.getSubjectDescription();
+		return subjectDescription;
 	}
 	
 	public String getSectionCode() {
@@ -32,8 +49,16 @@ public class FacultyLoad {
 		this.schedule = schedule;
 	}
 	
+	public int getTotalMeetings() {
+		return totalMeetings;
+	}
+	
+	public void setTotalMeetings(int totalMeetings) {
+		this.totalMeetings = totalMeetings;
+	}
+	
 	public String toString() {
-		return subject.getSubjectCode() + "	" + subject.getSubjectDescription() + "	" + section.getSectionCode()
+		return subjectCode + "	" + subjectDescription + "	" + section.getSectionCode()
 				+ "	" + schedule;
 	}
 }

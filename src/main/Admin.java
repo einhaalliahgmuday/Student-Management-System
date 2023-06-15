@@ -2,9 +2,11 @@ package main;
 
 public class Admin {
 
-	String adminNo, password;
-	String firstName, middleName, lastName;
-	String email, contactNo, address;
+	private String adminNo, password;
+	private String firstName, middleName, lastName;
+	private String email, contactNo;
+	
+	//remove everything, and remain only the adminNo and password?
 	
 	Admin(String facultyNo, String password, String firstName, String middleName, 
 			String lastName, String email, String contactNo, String address) {
@@ -15,6 +17,17 @@ public class Admin {
 		this.lastName = lastName;
 		this.email = email;
 		this.contactNo = contactNo;
-		this.address = address;
+	}
+	
+	public String getAdminNo() {
+		return adminNo;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
