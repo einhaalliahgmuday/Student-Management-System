@@ -9,10 +9,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("STUDENT MANAGEMENT SYSTEM");
+		System.out.println();
 		
-		
-		
-
 	}
-
 }
