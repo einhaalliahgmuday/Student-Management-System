@@ -1,6 +1,6 @@
 package main;
 
-public enum GradeSheetStatus {
+public enum GradingSheetStatus {
 
 	FINALIZED,
 	NOTYETFINALIZED;
