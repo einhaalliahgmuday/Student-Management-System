@@ -2,8 +2,9 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
 
 	private JPanel panel1, panel2;
 	private JSeparator sprtrUserID, sprtrPassword;
@@ -122,6 +123,14 @@ public class Login extends JFrame {
 		add(panel1);
 		add(panel2);
 		setVisible(true);
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (btngrpUser.getSelection() == rdbtnAdmin) {
+			
+		}
 		
 	}
 	
