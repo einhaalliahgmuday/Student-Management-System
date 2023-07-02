@@ -13,7 +13,7 @@ public class Login extends JFrame implements ActionListener {
 	private ButtonGroup bttngrpUser;
 	private JTextField txtfldUserID;
 	private JPasswordField txtfldPassword;
-	private JButton btnLogin;	
+	private JButton bttnLogin;	
 	
 	//include forgot password
 	//change the look and feel of radio button
@@ -97,12 +97,13 @@ public class Login extends JFrame implements ActionListener {
 		sprtrPassword.setBounds(50, 410, 410, 1);
 		sprtrPassword.setForeground(new Color(0, 0, 0));
 		
-		btnLogin = new JButton("Login");
-		btnLogin.setBounds(155, 460, 200, 40);
-		btnLogin.setFont(new Font("Tahoma", 1, 15));
-		btnLogin.setBorder(null);
-		btnLogin.setBackground(new Color(187, 37, 61));
-		btnLogin.setForeground(new Color(0, 0, 0));
+		bttnLogin = new JButton("Login");
+		bttnLogin.setBounds(155, 460, 200, 40);
+		bttnLogin.setFont(new Font("Tahoma", 1, 15));
+		bttnLogin.setBorder(null);
+		bttnLogin.setBackground(new Color(187, 37, 61));
+		bttnLogin.setForeground(new Color(0, 0, 0));
+		bttnLogin.addActionListener(this);
 		
 		panel2 = new JPanel();
 		panel2.setLayout(null);
@@ -117,7 +118,7 @@ public class Login extends JFrame implements ActionListener {
 		panel2.add(sprtrPassword);
 		panel2.add(rdbttnProfessor);
 		panel2.add(rdbttnAdmin);
-		panel2.add(btnLogin);
+		panel2.add(bttnLogin);
 		
 		
 		add(panel1);
@@ -128,9 +129,7 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (bttngrpUser.getSelection() == rdbttnAdmin) {
-			
-		}
+		Admin admin = new Admin();
 		
 	}
 	
