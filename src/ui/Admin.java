@@ -422,6 +422,7 @@ public class Admin extends JFrame {
 		cmbbxSectionCode.setBounds(130, 242, 100, 22);
 		cmbbxSectionCode.setAlignmentX(CENTER_ALIGNMENT);
 		cmbbxSectionCode.setForeground(new Color(0, 0, 0));
+		cmbbxSectionCode.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(17, 274, 100, 22);
@@ -497,6 +498,7 @@ public class Admin extends JFrame {
 		cmbbxSearch = new JComboBox(search);
 		cmbbxSearch.setBounds(65, 17, 90, 22);
 		cmbbxSearch.setForeground(Color.BLACK);
+		cmbbxSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		txtfldSearch = new JTextField();
 		txtfldSearch.setBounds(160, 17, 190, 22);
