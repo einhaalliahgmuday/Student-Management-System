@@ -7,13 +7,13 @@ import java.awt.event.*;
 public class Login extends JFrame implements ActionListener {
 
 	private JPanel panel1, panel2;
-	private JSeparator sprtrUserID, sprtrPassword;
-	private JRadioButton rdbtnProfessor, rdbtnAdmin;
-	private ButtonGroup btngrpUser;
 	private JLabel lblSMS1, lblSMS2, lblLogin, lblUserID, lblPassword;
+	private JSeparator sprtrUserID, sprtrPassword;
+	private JRadioButton rdbttnProfessor, rdbttnAdmin;
+	private ButtonGroup bttngrpUser;
 	private JTextField txtfldUserID;
 	private JPasswordField txtfldPassword;
-	private JButton btnLogin;	
+	private JButton bttnLogin;	
 	
 	//include forgot password
 	//change the look and feel of radio button
@@ -52,20 +52,20 @@ public class Login extends JFrame implements ActionListener {
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblLogin.setForeground(new Color(0, 0, 0));
 		
-		rdbtnProfessor = new JRadioButton("Professor");
-		rdbtnProfessor.setBounds(130, 190, 100, 25);
-		rdbtnProfessor.setBackground(null);
-		rdbtnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdbttnProfessor = new JRadioButton("Professor");
+		rdbttnProfessor.setBounds(130, 190, 100, 25);
+		rdbttnProfessor.setBackground(null);
+		rdbttnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		rdbtnAdmin = new JRadioButton("Admin");		//look and feel
-		rdbtnAdmin.setBounds(311, 190, 100, 25);
-		rdbtnAdmin.setBackground(null);
-		rdbtnAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdbttnAdmin = new JRadioButton("Admin");		//look and feel
+		rdbttnAdmin.setBounds(311, 190, 100, 25);
+		rdbttnAdmin.setBackground(null);
+		rdbttnAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		btngrpUser = new ButtonGroup();
-		btngrpUser.add(rdbtnProfessor);
-		btngrpUser.add(rdbtnAdmin);
-		rdbtnProfessor.doClick();
+		bttngrpUser = new ButtonGroup();
+		bttngrpUser.add(rdbttnProfessor);
+		bttngrpUser.add(rdbttnAdmin);
+		rdbttnProfessor.doClick();
 		
 		lblUserID = new JLabel("User ID");
 		lblUserID.setBounds(50, 230, 200, 30);
@@ -97,12 +97,13 @@ public class Login extends JFrame implements ActionListener {
 		sprtrPassword.setBounds(50, 410, 410, 1);
 		sprtrPassword.setForeground(new Color(0, 0, 0));
 		
-		btnLogin = new JButton("Login");
-		btnLogin.setBounds(155, 460, 200, 40);
-		btnLogin.setFont(new Font("Tahoma", 1, 15));
-		btnLogin.setBorder(null);
-		btnLogin.setBackground(new Color(187, 37, 61));
-		btnLogin.setForeground(new Color(0, 0, 0));
+		bttnLogin = new JButton("Login");
+		bttnLogin.setBounds(155, 460, 200, 40);
+		bttnLogin.setFont(new Font("Tahoma", 1, 15));
+		bttnLogin.setBorder(null);
+		bttnLogin.setBackground(new Color(187, 37, 61));
+		bttnLogin.setForeground(new Color(0, 0, 0));
+		bttnLogin.addActionListener(this);
 		
 		panel2 = new JPanel();
 		panel2.setLayout(null);
@@ -115,9 +116,9 @@ public class Login extends JFrame implements ActionListener {
 		panel2.add(lblPassword);
 		panel2.add(txtfldPassword);
 		panel2.add(sprtrPassword);
-		panel2.add(rdbtnProfessor);
-		panel2.add(rdbtnAdmin);
-		panel2.add(btnLogin);
+		panel2.add(rdbttnProfessor);
+		panel2.add(rdbttnAdmin);
+		panel2.add(bttnLogin);
 		
 		
 		add(panel1);
@@ -128,9 +129,7 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (btngrpUser.getSelection() == rdbtnAdmin) {
-			
-		}
+		Admin admin = new Admin();
 		
 	}
 	
