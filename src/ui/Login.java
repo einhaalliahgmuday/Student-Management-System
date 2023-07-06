@@ -15,9 +15,8 @@ public class Login extends JFrame implements ActionListener {
 	private JPasswordField txtfldPassword;
 	private JButton bttnLogin;	
 	
-	//include forgot password
-	//change the look and feel of radio button
-	//fix login button, it changes color when clicked
+	//include forgot password?
+	//fix login button? it changes color when clicked
 	
 	Login() {	
 		
@@ -56,8 +55,10 @@ public class Login extends JFrame implements ActionListener {
 		rdbttnProfessor.setBounds(130, 190, 100, 25);
 		rdbttnProfessor.setBackground(null);
 		rdbttnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
+//		rdbttnProfessor.addActionListener(this);
 		
-		rdbttnAdmin = new JRadioButton("Admin");		//look and feel
+		
+		rdbttnAdmin = new JRadioButton("Admin");
 		rdbttnAdmin.setBounds(311, 190, 100, 25);
 		rdbttnAdmin.setBackground(null);
 		rdbttnAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -129,7 +130,11 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Admin admin = new Admin();
+//		if (e.getSource() == bttnLogin) {
+			if (bttngrpUser.getSelection() == rdbttnProfessor) {
+				Admin admin = new Admin();
+			}
+//		}
 		
 	}
 	
