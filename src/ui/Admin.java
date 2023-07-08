@@ -5,12 +5,15 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Admin extends JFrame {
+public class Admin extends JFrame implements ActionListener {
 	
 	JLabel lblSMS;
 	JTabbedPane tabbedPane;
 	JPanel pnlStudent;
+	JButton bttnLogout;
 	
 	JPanel studentPnl1, studentPnl2;
 	JLabel lblStudentNo, lblFirstName, lblMiddleName, lblLastName, lblSex, lblBirthday, lblSectionCode, 
@@ -44,6 +47,14 @@ public class Admin extends JFrame {
 		lblSMS.setFont(new Font("Tahoma", 1, 30));
 		lblSMS.setForeground(new Color(255, 255, 255));
 		
+		bttnLogout = new JButton("Logout");
+		bttnLogout.setBounds(915, 55, 100, 25);
+		bttnLogout.setBorderPainted(false);
+		bttnLogout.setBackground(null);
+		bttnLogout.setFont(new Font("Tahoma", 1, 14));
+		bttnLogout.setForeground(new Color(255, 255, 255));
+		bttnLogout.addActionListener(this);
+		
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBounds(20, 70, 995, 520);
 		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -52,6 +63,7 @@ public class Admin extends JFrame {
 		
 		add(lblSMS);
 		add(tabbedPane);
+		add(bttnLogout);
 		setVisible(true);
 	}
 	
@@ -314,6 +326,65 @@ public class Admin extends JFrame {
 		
 		return pnlStudent;
 		
+	}
+	
+	public static boolean confirmLogout() {		//return true or false
+		
+		boolean logout = false;
+		
+		JFrame frmLogout = new JFrame("Confirm Logout");
+		frmLogout.setSize(300, 125);
+		frmLogout.getContentPane().setBackground(new Color(187, 37, 61));
+		frmLogout.setLayout(null);
+		frmLogout.setResizable(false);
+		frmLogout.setLocationRelativeTo(null);
+		frmLogout.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		JLabel lblConfirm = new JLabel("Are you sure you want to log out?");
+		lblConfirm.setBounds(20, 10, 300, 25);
+		lblConfirm.setFont(new Font("Tahoma", 1, 14));
+		lblConfirm.setForeground(new Color(255, 255, 255));
+		
+		JButton bttnNo = new JButton("No");
+		bttnNo.setBounds(50, 45, 70, 22);
+		bttnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		bttnNo.setForeground(new Color(0, 0, 0));
+		bttnNo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				logout = false;
+				frmLogout.dispose();
+			}
+		});
+		
+		JButton bttnYes = new JButton("Yes");
+		bttnYes.setBounds(165, 45, 70, 22);
+		bttnYes.setFont(new Font("Tahoma", 1, 12));
+		bttnYes.setForeground(new Color(0, 0, 0));
+		bttnYes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				logout = true;
+				frmLogout.dispose();
+			}
+		});
+		
+		frmLogout.add(lblConfirm, BorderLayout.CENTER);
+		frmLogout.add(bttnYes);
+		frmLogout.add(bttnNo);
+		frmLogout.setVisible(true);
+		
+		return logout;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == bttnLogout) {
+			if (confirmLogout()) {
+				new Login();
+			}
+		} 
 	}
 
 }

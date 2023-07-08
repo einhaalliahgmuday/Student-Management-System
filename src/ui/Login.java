@@ -55,7 +55,6 @@ public class Login extends JFrame implements ActionListener {
 		rdbttnProfessor.setBounds(130, 190, 100, 25);
 		rdbttnProfessor.setBackground(null);
 		rdbttnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
-//		rdbttnProfessor.addActionListener(this);
 		
 		
 		rdbttnAdmin = new JRadioButton("Admin");
@@ -130,11 +129,14 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == bttnLogin) {
-			if (bttngrpUser.getSelection() == rdbttnProfessor) {
+		if (e.getSource() == bttnLogin) {
+			if (rdbttnProfessor.isSelected()) {
+				Professor admin = new Professor();
+			}
+			else if (rdbttnAdmin.isSelected()) {
 				Admin admin = new Admin();
 			}
-//		}
+		}
 		
 	}
 	
