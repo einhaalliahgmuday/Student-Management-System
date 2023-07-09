@@ -328,17 +328,14 @@ public class Admin extends JFrame implements ActionListener {
 		
 	}
 	
-	public static boolean confirmLogout() {		//return true or false
+	public void confirmLogout() {
 		
-		boolean logout = false;
-		
-		JFrame frmLogout = new JFrame("Confirm Logout");
-		frmLogout.setSize(300, 125);
-		frmLogout.getContentPane().setBackground(new Color(187, 37, 61));
-		frmLogout.setLayout(null);
-		frmLogout.setResizable(false);
-		frmLogout.setLocationRelativeTo(null);
-		frmLogout.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
+		dlgLogout.setSize(300, 125);
+		dlgLogout.setLayout(null);
+		dlgLogout.setResizable(false);
+		dlgLogout.setLocationRelativeTo(null);
+		dlgLogout.getContentPane().setBackground(new Color(187, 37, 61));
 		
 		JLabel lblConfirm = new JLabel("Are you sure you want to log out?");
 		lblConfirm.setBounds(20, 10, 300, 25);
@@ -352,8 +349,7 @@ public class Admin extends JFrame implements ActionListener {
 		bttnNo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				logout = false;
-				frmLogout.dispose();
+				dlgLogout.dispose();
 			}
 		});
 		
@@ -364,26 +360,24 @@ public class Admin extends JFrame implements ActionListener {
 		bttnYes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				logout = true;
-				frmLogout.dispose();
+				dispose();
+				new Login();
 			}
 		});
 		
-		frmLogout.add(lblConfirm, BorderLayout.CENTER);
-		frmLogout.add(bttnYes);
-		frmLogout.add(bttnNo);
-		frmLogout.setVisible(true);
 		
-		return logout;
+		dlgLogout.add(lblConfirm);
+		dlgLogout.add(bttnYes);
+		dlgLogout.add(bttnNo);
+		dlgLogout.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == bttnLogout) {
-			if (confirmLogout()) {
-				new Login();
-			}
+			
+			confirmLogout();
 		} 
 	}
 

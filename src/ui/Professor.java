@@ -1,12 +1,14 @@
 package ui;
 
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.table.*;
+import javax.swing.border.LineBorder;
+import javax.swing.table.JTableHeader;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Professor extends JFrame {
+public class Professor extends JFrame implements ActionListener {
 	
 	JLabel lblSMS, lblFacultyLoad;
 	JButton bttnClassList, bttnGradingSheet, bttnLogout;
@@ -35,6 +37,7 @@ public class Professor extends JFrame {
 		bttnLogout.setBackground(null);
 		bttnLogout.setFont(new Font("Tahoma", 1, 14));
 		bttnLogout.setForeground(new Color(255, 255, 255));
+		bttnLogout.addActionListener(this);
 		
 		panel = new JPanel();
 		panel.setBounds(20, 85, 995, 500);
@@ -88,6 +91,59 @@ public class Professor extends JFrame {
 		add(panel);
 		add(bttnLogout);
 		setVisible(true);
+	}	
+	
+	public void confirmLogout() {
+		
+		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
+		dlgLogout.setSize(300, 125);
+		dlgLogout.setLayout(null);
+		dlgLogout.setResizable(false);
+		dlgLogout.setLocationRelativeTo(null);
+		dlgLogout.getContentPane().setBackground(new Color(187, 37, 61));
+		
+		JLabel lblConfirm = new JLabel("Are you sure you want to log out?");
+		lblConfirm.setBounds(20, 10, 300, 25);
+		lblConfirm.setFont(new Font("Tahoma", 1, 14));
+		lblConfirm.setForeground(new Color(255, 255, 255));
+		
+		JButton bttnNo = new JButton("No");
+		bttnNo.setBounds(50, 45, 70, 22);
+		bttnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		bttnNo.setForeground(new Color(0, 0, 0));
+		bttnNo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dlgLogout.dispose();
+			}
+		});
+		
+		JButton bttnYes = new JButton("Yes");
+		bttnYes.setBounds(165, 45, 70, 22);
+		bttnYes.setFont(new Font("Tahoma", 1, 12));
+		bttnYes.setForeground(new Color(0, 0, 0));
+		bttnYes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Login();
+			}
+		});
+		
+		
+		dlgLogout.add(lblConfirm);
+		dlgLogout.add(bttnYes);
+		dlgLogout.add(bttnNo);
+		dlgLogout.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource() == bttnLogout) {
+			confirmLogout();
+		} 
+		
 	}
 
 }
