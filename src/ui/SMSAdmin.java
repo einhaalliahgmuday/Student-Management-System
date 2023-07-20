@@ -1,17 +1,19 @@
-package ui;
+//This is the UI for Admin.
 
-import main.*;
+package ui;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
+
+import models.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
 public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
-	
+
 	Admin admin;
 	StudentRecords studentRecords;
 	TableModel tableModel = TableModel.ALL;
@@ -222,12 +224,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		bttnAdd.setForeground(new Color(0, 0, 0));
 		bttnAdd.addActionListener(this);
 		
-//		bttnUpdate = new JButton("Update");
-//		bttnUpdate.setBounds(110, 413, 130, 22);
-//		bttnUpdate.setFont(new Font("Tahoma", 1, 12));
-//		bttnUpdate.setForeground(new Color(0, 0, 0));
-//		bttnUpdate.addActionListener(this);
-		
 		bttnClear = new JButton("Clear");
 		bttnClear.setBounds(110, 413, 130, 22);
 		bttnClear.setFont(new Font("Tahoma", 1, 12));
@@ -262,7 +258,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		studentPnlAddStudent.add(lblAddress);
 		studentPnlAddStudent.add(txtfldAddress);
 		studentPnlAddStudent.add(bttnAdd);
-//		studentPnlAddStudent.add(bttnUpdate);
 		studentPnlAddStudent.add(bttnClear);
 		
 		
@@ -355,54 +350,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		return pnlStudent;
 	}
 	
-	public void confirmLogout() {
-		
-		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
-		dlgLogout.setSize(300, 125);
-		dlgLogout.setLayout(null);
-		dlgLogout.setResizable(false);
-		dlgLogout.setLocationRelativeTo(null);
-		dlgLogout.getContentPane().setBackground(new Color(187, 37, 61));
-		
-		JLabel lblConfirm = new JLabel("Are you sure you want to log out?");
-		lblConfirm.setBounds(20, 10, 300, 25);
-		lblConfirm.setFont(new Font("Tahoma", 1, 14));
-		lblConfirm.setForeground(new Color(255, 255, 255));
-		
-		JButton bttnNo = new JButton("No");
-		bttnNo.setBounds(50, 45, 70, 22);
-		bttnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		bttnNo.setForeground(new Color(0, 0, 0));
-		bttnNo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dlgLogout.dispose();
-			}
-		});
-		
-		JButton bttnYes = new JButton("Yes");
-		bttnYes.setBounds(165, 45, 70, 22);
-		bttnYes.setFont(new Font("Tahoma", 1, 12));
-		bttnYes.setForeground(new Color(0, 0, 0));
-		bttnYes.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-				try {
-					new SMSLogin();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		
-		
-		dlgLogout.add(lblConfirm);
-		dlgLogout.add(bttnYes);
-		dlgLogout.add(bttnNo);
-		dlgLogout.setVisible(true);
-	}
-	
 	public void displayStudentRecordsTable() throws SQLException {
 		
 		DefaultTableModel tblmdlStudentRecords = new DefaultTableModel() {
@@ -492,6 +439,54 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			}
 		}
 	}
+	
+	public void confirmLogout() {
+		
+		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
+		dlgLogout.setSize(300, 125);
+		dlgLogout.setLayout(null);
+		dlgLogout.setResizable(false);
+		dlgLogout.setLocationRelativeTo(null);
+		dlgLogout.getContentPane().setBackground(new Color(187, 37, 61));
+		
+		JLabel lblConfirm = new JLabel("Are you sure you want to log out?");
+		lblConfirm.setBounds(20, 10, 300, 25);
+		lblConfirm.setFont(new Font("Tahoma", 1, 14));
+		lblConfirm.setForeground(new Color(255, 255, 255));
+		
+		JButton bttnNo = new JButton("No");
+		bttnNo.setBounds(50, 45, 70, 22);
+		bttnNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		bttnNo.setForeground(new Color(0, 0, 0));
+		bttnNo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dlgLogout.dispose();
+			}
+		});
+		
+		JButton bttnYes = new JButton("Yes");
+		bttnYes.setBounds(165, 45, 70, 22);
+		bttnYes.setFont(new Font("Tahoma", 1, 12));
+		bttnYes.setForeground(new Color(0, 0, 0));
+		bttnYes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				try {
+					new SMSLogin();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		
+		dlgLogout.add(lblConfirm);
+		dlgLogout.add(bttnYes);
+		dlgLogout.add(bttnNo);
+		dlgLogout.setVisible(true);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -499,9 +494,12 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		if (e.getSource() == bttnLogout) {			
 			confirmLogout();
 		} 
-		else if (e.getSource() == bttnAdd) {	//This action adds a student to the student record.
+		else if (e.getSource() == bttnAdd) {	//This action creates a student record.
 			student = null;
 			
+			/*The input for birthday and sex is placed into a String, as textfields for birthYear, birthMonth,
+			 * and birthDay is separated and button group has no method that return the name selected item.
+			 */
 			String birthday = txtfldBirthYear.getText()+"-"+txtfldBirthMonth.getText()+"-"+txtfldBirthDay.getText();
 			String sex = "";	
 			if (rdbttnMale.isSelected()) {
@@ -511,26 +509,40 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				sex = "Female";
 			}
 			
+			//These are the conditions for adding a student.
 			if (txtfldStudentNo.getText().trim().isEmpty() || txtfldFirstName.getText().trim().isEmpty() || 
 					txtfldLastName.getText().trim().isEmpty() || sex.trim().isEmpty() || txtfldBirthYear.getText().trim().isEmpty() || 
 					txtfldBirthMonth.getText().trim().isEmpty() || txtfldBirthDay.getText().trim().isEmpty() ||
-					cmbbxSectionCode.getSelectedItem().toString().equals("----SELECT----")) {
+					cmbbxSectionCode.getSelectedItem().toString().equals("----SELECT----")) {		
+				
+				/*
+				 *  If textfields are null, or some of the necessary information were not provided, a dialog will
+				 *  appear which informs the Admin no student is added.
+				 */
 				
 				smsDialog.showMessageDialog(this, "No Student Added", "Please fill-in the necessary information.");
 			}
 			else if (txtfldStudentNo.getText().length() < 15) {
+				/* If the student number input is less than 15, which is the precise length, a dialog will
+				 * appear that the student number is invalid.
+				 */
+				
 				smsDialog.showMessageDialog(this, "Invalid Student Number", "Please enter a valid student number.");
 			}
 			else {
+				//If all conditions are met, it will try to add the student, while catching the possible Exceptions.
 				try {
+					/*The inputs are used to instantiate a @Student, which will be thrown as parameter in "createStudentRecord()"
+					 * method of the admin.
+					 */
 					student = new Student(txtfldStudentNo.getText(), txtfldFirstName.getText(), txtfldMiddleName.getText(), 
 							txtfldLastName.getText(), sex, Date.valueOf(birthday), cmbbxSectionCode.getSelectedItem().toString(), 
 							txtfldEmail.getText(), txtfldContactNo.getText(), txtfldAddress.getText());
 					
-					admin.createStudentRecord(student);
-					smsDialog.showMessageDialog(this, "Student Record Created");
-					studentRecords.update();
+					admin.createStudentRecord(student);		//This is the code that creates the student record.
+					smsDialog.showMessageDialog(this, "Student Record Created");	//If the student is successfully created, a dialog will inform the admin.
 					
+					// The textfields are cleared.
 					txtfldStudentNo.setText(""); 
 					txtfldFirstName.setText(""); 
 					txtfldMiddleName.setText(""); 
@@ -544,13 +556,19 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					txtfldContactNo.setText(""); 
 					txtfldAddress.setText("");
 					
+					//The table model is set to "ALL", and the table is refreshed.
 					tableModel = TableModel.ALL;
 					displayStudentRecordsTable();
-				} catch (SQLIntegrityConstraintViolationException e1) {
+				} catch (SQLIntegrityConstraintViolationException e1) {		
+					/*This catches a duplicate student number, that is, if the student number already
+					 * exists in the system.
+					 */
 					smsDialog.showMessageDialog(this, "Duplicate Student Number", "The student number you entered already", "exists.");
 				} catch (SQLException e1) {
+					//This catches all other SQL Exceptions.
 					e1.printStackTrace();
 				} catch (Exception e1) {
+					//This catches all other Exceptions.
 					smsDialog.showMessageDialog(this, "Student Not Created", "Please make sure you entered valid", "information.");
 				}
 				
@@ -600,7 +618,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				try {
 					admin.deleteStudentRecord(student);
 					smsDialog.showMessageDialog(this, "Student Record Deleted");
-					studentRecords.update();
 					displayStudentRecordsTable();
 					
 					student = null;

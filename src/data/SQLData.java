@@ -1,9 +1,14 @@
+/*
+ * This class connects the system to its MySQL database. It performs basics operations, such as create, read,
+ 	and delete (CRUD).
+ */
+
 package data;
 
 import java.sql.*;
 import java.util.*;
 
-import main.*;
+import models.*;
 
 public class SQLData {
 	

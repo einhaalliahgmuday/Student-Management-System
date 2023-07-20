@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import main.FacultyLoad;
+import models.FacultyLoad;
 
 public class SMSClassList extends JFrame implements ActionListener {
 	
@@ -39,7 +39,6 @@ public class SMSClassList extends JFrame implements ActionListener {
 		setLayout(null);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(187, 37, 61));
 		
 		lblClassList = new JLabel("Class List");
@@ -124,13 +123,13 @@ public class SMSClassList extends JFrame implements ActionListener {
 		pnlLoadDescription.add(lblScheduleV);
 		
 		
-		lblSearch = new JLabel("Search Student: ");
+		lblSearch = new JLabel("Search Student No:");
 		lblSearch.setBounds(10, 10, 120, 22);
 		lblSearch.setFont(new Font("Tahoma", 1, 12));
 		lblSearch.setForeground(new Color(0, 0, 0));
 		
 		txtfldSearch = new JTextField();
-		txtfldSearch.setBounds(120, 10, 482, 22);
+		txtfldSearch.setBounds(140, 10, 462, 22);
 		txtfldSearch.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldSearch.setForeground(new Color(0, 0, 0));

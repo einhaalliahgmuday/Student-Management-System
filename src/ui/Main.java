@@ -1,3 +1,6 @@
+/* This is the Main of Student Management System.
+ */
+
 package ui;
 
 import java.awt.EventQueue;
@@ -8,6 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		
+		//EventQueue is used to execute the application.
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -18,6 +22,14 @@ public class Main {
 				}
 			}
 		});
+		
+		
+		
+		/* Admin: AD2023-000-BN (same ID and password)
+		 * Faculty: FA2023-000-BN (same ID and password)
+		 * 
+		 * The comments and Trello will be updated by Saturday.
+		 */
 
 	}
 

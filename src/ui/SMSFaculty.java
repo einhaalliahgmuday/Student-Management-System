@@ -5,23 +5,23 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import models.FacultyLoad;
+import models.Professor;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-
-import main.FacultyLoad;
-import main.Professor;
+import java.util.ArrayList;
 
 public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 	
 	Professor professor;
 	FacultyLoad selectedFacultyLoad;
-	
-	SMSClassList smsClassList;
-	SMSGradingSheet smsGradingSheet;
+	ArrayList<SMSGradingSheet> gradingSheets = new ArrayList<SMSGradingSheet>();
+	ArrayList<SMSClassList> classLists = new ArrayList<SMSClassList>();
 	
 	JLabel lblSMS, lblFacultyLoad;
 	JButton bttnClassList, bttnGradingSheet, bttnLogout;
@@ -190,13 +190,13 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				try {
-//					if (smsGradingSheet != null) {
-//						smsGradingSheet.dispose();
-//					}
-//					if (smsClassList != null) {
-//						smsClassList.dispose();
-//					}
 					new SMSLogin();
+					for (var classList : classLists) {
+						classList.dispose();
+					}
+					for (var gradingSheet : gradingSheets) {
+						gradingSheet.dispose();
+					}
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -219,7 +219,7 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 		else if (e.getSource() == bttnClassList) {
 			try {
 				if (selectedFacultyLoad != null) {
-					smsClassList = new SMSClassList(selectedFacultyLoad);
+					classLists.add(new SMSClassList(selectedFacultyLoad));
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -228,7 +228,7 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 		else if (e.getSource() == bttnGradingSheet) {
 			try {
 				if (selectedFacultyLoad != null) {
-					smsGradingSheet = new SMSGradingSheet(professor, selectedFacultyLoad);
+					gradingSheets.add(new SMSGradingSheet(professor, selectedFacultyLoad));
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();

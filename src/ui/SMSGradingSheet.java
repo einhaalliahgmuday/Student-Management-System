@@ -13,9 +13,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import main.FacultyLoad;
-import main.Professor;
-import main.StudentGrade;
+import models.FacultyLoad;
+import models.Professor;
+import models.StudentGrade;
 
 public class SMSGradingSheet extends JFrame implements ActionListener{
 	
@@ -51,18 +51,17 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		this.professor = professor;
 		this.facultyLoad = facultyLoad;
 		
-		lblGradingSheet = new JLabel("Grading Sheet");
-		lblGradingSheet.setBounds(20, 7, 150, 40);
-		lblGradingSheet.setFont(new Font("Tahoma", 1, 20));
-		lblGradingSheet.setForeground(new Color(255, 255, 255));
-		
 		setTitle("Grading Sheet - Student Management System");
 		setSize(1050, 650);
 		setLayout(null);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(187, 37, 61));
+		
+		lblGradingSheet = new JLabel("Grading Sheet");
+		lblGradingSheet.setBounds(20, 7, 150, 40);
+		lblGradingSheet.setFont(new Font("Tahoma", 1, 20));
+		lblGradingSheet.setForeground(new Color(255, 255, 255));
 		
 		
 		lblSchoolYear = new JLabel("School Year");
@@ -262,13 +261,13 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		pnlGradingSheet.add(bttnClear);
 		
 		
-		lblSearch = new JLabel("Search Student: ");
-		lblSearch.setBounds(10, 10, 120, 22);
+		lblSearch = new JLabel("Search Student No: ");
+		lblSearch.setBounds(10, 10, 135, 22);
 		lblSearch.setFont(new Font("Tahoma", 1, 12));
 		lblSearch.setForeground(new Color(0, 0, 0));
 		
 		txtfldSearch = new JTextField();
-		txtfldSearch.setBounds(125, 10, 188, 22);
+		txtfldSearch.setBounds(140, 10, 173, 22);
 		txtfldSearch.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldSearch.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldSearch.setForeground(new Color(0, 0, 0));
@@ -323,7 +322,9 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 					txtfldFinalsGrade.setText(Double.toString(studentGrade.getFinalsGrade()));
 					txtfldFinalRating.setText(Double.toString(studentGrade.getFinalRating()));
 					txtfldTotalAttendance.setText(Integer.toString(studentGrade.getTotalAttendance()));
-					cmbbxRemark.setSelectedItem(studentGrade.getRemark().toString());
+					if (studentGrade.getRemark() != null) {
+						cmbbxRemark.setSelectedItem(studentGrade.getRemark());
+					}
 				}
 			}
 			
@@ -462,8 +463,7 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 					
 					try {
 						professor.updateStudentGrade(studentGrade);
-						facultyLoad.updateGradeSheet();
-						smsDialog.showMessageDialog(this, "Student Grades Saved");
+						smsDialog.showMessageDialog(this, "Student Grade Saved");
 						
 						txtfldFinalRating.setText(Double.toString(studentGrade.getFinalRating()));
 						
@@ -477,10 +477,12 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 			}
 		}
 		else if (e.getSource() == bttnCompute) {
-			double midtermGrade = Double.parseDouble(txtfldMidtermGrade.getText());
-			double finalsGrade = Double.parseDouble(txtfldFinalsGrade.getText());
-			double finalRating = (midtermGrade+finalsGrade)/2;
-			txtfldFinalRating.setText(Double.toString(finalRating));
+			if (studentGrade != null) {
+				double midtermGrade = Double.parseDouble(txtfldMidtermGrade.getText());
+				double finalsGrade = Double.parseDouble(txtfldFinalsGrade.getText());
+				double finalRating = (midtermGrade+finalsGrade)/2;
+				txtfldFinalRating.setText(Double.toString(finalRating));
+			}
 		}
 		else if (e.getSource() == bttnClear) {
 			lblStudentNoV.setText("");
@@ -490,6 +492,8 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 			txtfldFinalRating.setText("");
 			txtfldTotalAttendance.setText("");
 			cmbbxRemark.setSelectedIndex(0);
+			
+			studentGrade = null;
 		}
 		
 	}

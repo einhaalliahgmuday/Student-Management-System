@@ -4,11 +4,12 @@
 
 package ui;
 
-import main.Admin;
-import main.User;
-import main.Professor;
-
 import javax.swing.*;
+
+import models.Admin;
+import models.Professor;
+import models.User;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
@@ -149,7 +150,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 					new SMSFaculty(professor);
 				}
 				else {
-					smsDialogs.showMessageDialog(this, "Login Failed", "You've entered an invalid ID or password");
+					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -163,7 +164,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 					new SMSAdmin(admin);
 				}
 				else {
-					smsDialogs.showMessageDialog(this, "Login Failed", "You've entered an invalid ID or password");
+					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
