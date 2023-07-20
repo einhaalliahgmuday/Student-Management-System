@@ -8,4 +8,4 @@ CREATE TABLE `studentmanagementsystem`.`admin` (
   `contactno` CHAR(11) NULL,
   PRIMARY KEY (`adminno`));
 
-INSERT INTO `studentmanagementsystem`.`admin` (`adminno`, `smspassword`, `firstname`, `middlename`, `lastname`) VALUES ('AD2023-001-BN-0', 'AD2023-001-BN-0', 'Einha Alliah', 'Genciana', 'Muday');
+INSERT INTO `studentmanagementsystem`.`admin` (`adminno`, `smspassword`, `firstname`, `middlename`, `lastname`) VALUES ('AD2023-000-BN-0', 'AD2023-000-BN-0', 'Einha Alliah', 'Genciana', 'Muday');
