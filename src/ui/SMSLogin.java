@@ -1,11 +1,23 @@
+/*
+ * This class is the UI to login into an SMS account.
+ */
+
 package ui;
+
+import main.Admin;
+import main.User;
+import main.Professor;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
-public class Login extends JFrame implements ActionListener {
-
+public class SMSLogin extends JFrame implements ActionListener {
+	
+	User user = new User();
+	SMSDialog smsDialogs = new SMSDialog();
+	
 	private JPanel panel1, panel2;
 	private JLabel lblSMS1, lblSMS2, lblLogin, lblUserID, lblPassword;
 	private JSeparator sprtrUserID, sprtrPassword;
@@ -13,13 +25,9 @@ public class Login extends JFrame implements ActionListener {
 	private ButtonGroup bttngrpUser;
 	private JTextField txtfldUserID;
 	private JPasswordField txtfldPassword;
-	private JButton bttnLogin;	
+	private JButton bttnLogin;
 	
-	//include forgot password
-	//change the look and feel of radio button
-	//fix login button, it changes color when clicked
-	
-	Login() {	
+	SMSLogin() throws SQLException {	
 		
 		setTitle("Student Management System - Login");
 		setSize(1050, 650);
@@ -57,7 +65,8 @@ public class Login extends JFrame implements ActionListener {
 		rdbttnProfessor.setBackground(null);
 		rdbttnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		rdbttnAdmin = new JRadioButton("Admin");		//look and feel
+		
+		rdbttnAdmin = new JRadioButton("Admin");
 		rdbttnAdmin.setBounds(311, 190, 100, 25);
 		rdbttnAdmin.setBackground(null);
 		rdbttnAdmin.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -67,7 +76,7 @@ public class Login extends JFrame implements ActionListener {
 		bttngrpUser.add(rdbttnAdmin);
 		rdbttnProfessor.doClick();
 		
-		lblUserID = new JLabel("User ID");
+		lblUserID = new JLabel("ID");
 		lblUserID.setBounds(50, 230, 200, 30);
 		lblUserID.setFont(new Font("Tahoma", 1, 20));
 		
@@ -129,7 +138,37 @@ public class Login extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Admin admin = new Admin();
+		String userID = txtfldUserID.getText();
+		String password = new String(txtfldPassword.getPassword());
+		
+		if (rdbttnProfessor.isSelected()) {
+			try {
+				Professor professor = user.loginAsProfessor(userID, password);
+				if (professor != null) {
+					dispose();
+					new SMSFaculty(professor);
+				}
+				else {
+					smsDialogs.showMessageDialog(this, "Login Failed", "You've entered an invalid ID or password");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		else if (rdbttnAdmin.isSelected()) {
+			try {
+				Admin admin = user.loginAsAdmin(userID, password);
+				if (admin != null) {
+					dispose();
+					new SMSAdmin(admin);
+				}
+				else {
+					smsDialogs.showMessageDialog(this, "Login Failed", "You've entered an invalid ID or password");
+				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 	}
 	

@@ -1,22 +1,22 @@
 package main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Professor {
+import data.SQLData;
 
-	private String facultyNo;
-	private String password;
+public class Professor {
+	
+	private SQLData sql = new SQLData();
+
+	private String facultyNo, password;
 	private String firstName, middleName, lastName;
-	private String email;
-	private String contactNo;
-	private String address;
-	private ArrayList<FacultyLoad> facultyLoads  = new ArrayList<FacultyLoad>();
+	private String email, contactNo;
 	
-	//separate login credential?
-	//get student by
+	private ArrayList<FacultyLoad> facultyLoads;
 	
-	public Professor(String facultyNo, String password, String firstName, String middleName, 
-			String lastName, String email, String contactNo, String address) {
+	public Professor(String facultyNo, String password, String firstName, String middleName, String lastName, 
+			String email, String contactNo) throws SQLException {
 		
 		this.facultyNo = facultyNo;
 		this.password = password;
@@ -25,7 +25,8 @@ public class Professor {
 		this.lastName = lastName;
 		this.email = email;
 		this.contactNo = contactNo;
-		this.address = address;
+		
+		facultyLoads = sql.getFacultyLoads(this.facultyNo);
 	}
 	
 	public String getFacultyNo() {
@@ -36,51 +37,31 @@ public class Professor {
 		return password;
 	}
 	
-	public void setPassword(String newPassword) {
-		this.password = newPassword;
+	public String getFirstName() {
+		return firstName;
 	}
 	
-	public String getName() {
-		String name = firstName + " " + middleName + " " + lastName;
-		return name;
+	public String getMiddleName() {
+		return middleName;
+	}
+	
+	public String getLastName() {
+		return lastName;
 	}
 	
 	public String getEmail() {
 		return email;
 	}
 	
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
 	public String getContactNo() {
 		return contactNo;
-	}
-	
-	public void setContactNo(String contactNo) {
-		this.contactNo = contactNo;
-	}
-	
-	public String getAddress() {
-		return address;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
 	}
 	
 	public ArrayList<FacultyLoad> getFacultyLoads() {
 		return facultyLoads;
 	}
 	
-	public void addFacultyLoad(FacultyLoad facultyLoad) {
-		facultyLoads.add(facultyLoad);
+	public void updateStudentGrade(StudentGrade studentGrade) throws SQLException {
+		sql.updateStudentGrade(studentGrade);
 	}
-	
-	public void displayFacultyLoads() {
-		for (FacultyLoad facultyLoad : facultyLoads) {
-			System.out.println(facultyLoad);
-		}
-	}
-	
 }

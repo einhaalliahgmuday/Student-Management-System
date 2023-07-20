@@ -1,32 +1,48 @@
 package main;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import data.SQLData;
+
 public class FacultyLoad {
 
-	private int schoolYear, semester;
+	private SQLData sql = new SQLData();
+
+	private int year;
+	private String semester;
+	private String professorFacultyNo;
 	private String subjectCode, subjectDescription;
-	private Section section;
+	private String sectionCode;
 	private String schedule;
-	private int totalMeetings;
 	
-	//add professor as attribute?
+	private ArrayList<Student> classList;
+	private ArrayList<StudentGrade> gradingSheet;
 	
-	public FacultyLoad(int schoolYear, int semester, String subjectCode, String subjectDescription, 
-			Section section, String schedule) {
-		this.schoolYear = schoolYear;
+	public FacultyLoad(int year, String semester, String professorFacultyNo, String subjectCode, String subjectDescription, 
+			String sectionCode, String schedule) throws SQLException {
+		this.year = year;
 		this.semester = semester;
+		this.professorFacultyNo = professorFacultyNo;
 		this.subjectCode = subjectCode;
 		this.subjectDescription = subjectDescription;
-		this.section = section;
+		this.sectionCode = sectionCode;
 		this.schedule = schedule;
-		this.totalMeetings = 0;
+		
+		classList = sql.getClassList(this.sectionCode);
+		gradingSheet = sql.getStudentGrades(sectionCode, subjectCode, professorFacultyNo);
 	}
 	
-	public int getSchoolYear() {
-		return schoolYear;
+	public int getYear() {
+		return year;
 	}
 	
-	public int getSemester() {
+	public String getSemester() {
 		return semester;
+	}
+	
+	public String getProfessorFacultyNo() {
+		return professorFacultyNo;
 	}
 	
 	public String getSubjectCode() {
@@ -38,27 +54,39 @@ public class FacultyLoad {
 	}
 	
 	public String getSectionCode() {
-		return section.getSectionCode();
+		return sectionCode;
 	}
 	
 	public String getSchedule() {
 		return schedule;
 	}
 	
-	public void setSchedule(String schedule) {
-		this.schedule = schedule;
+	public ArrayList<Student> getClassList() throws SQLException {		
+		return classList;
 	}
 	
-	public int getTotalMeetings() {
-		return totalMeetings;
+	public ArrayList<StudentGrade> getGradingSheet() throws SQLException {
+		return gradingSheet;
 	}
 	
-	public void setTotalMeetings(int totalMeetings) {
-		this.totalMeetings = totalMeetings;
+	public void updateGradeSheet() throws SQLException {
+		gradingSheet = sql.getStudentGrades(sectionCode, subjectCode, professorFacultyNo);
+	}
+	
+	public StudentGrade getStudentGradeByStudentNo(String studentNo) throws SQLException {		
+		StudentGrade foundStudentGrade = null;
+		
+		for (var studentGrade : getGradingSheet()) {
+			if (studentGrade.getStudentNo().equals(studentNo)) {
+				foundStudentGrade = studentGrade;
+			}
+		}
+		
+		return foundStudentGrade;
 	}
 	
 	public String toString() {
-		return subjectCode + "	" + subjectDescription + "	" + section.getSectionCode()
-				+ "	" + schedule;
+		return year + "	" + semester + "	" + professorFacultyNo + "	" + subjectCode + "	" + subjectDescription 
+				+ "	" + sectionCode + "	" + schedule;
 	}
 }
