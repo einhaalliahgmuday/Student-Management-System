@@ -1,5 +1,4 @@
-/* This is the Main of Student Management System.
- */
+// This is the Main of Student Management System.
 
 package ui;
 
@@ -25,10 +24,15 @@ public class Main {
 		
 		
 		
-		/* Admin: AD2023-000-BN (same ID and password)
-		 * Faculty: FA2023-000-BN (same ID and password)
+		
+		
+		/* Admin: AD2023-000-BN-0 (same ID and password)
+		 * Faculty: FA2023-000-BN-0 (same ID and password)
 		 * 
-		 * The comments and Trello will be updated by Saturday.
+		 * Double-click on table to select
+		 * (for adding and deleting a student record, selecting a faculty load to view class list or grading sheet)
+		 * 
+		 * The comments will be updated by Saturday for better understanding.
 		 */
 
 	}
