@@ -1,19 +1,23 @@
 package main;
 
+import java.sql.SQLException;
+import data.SQLData;
+
 public class Admin {
+	
+	private SQLData sql = new SQLData();
 
 	private String adminNo, password;
 	private String firstName, middleName, lastName;
 	private String email, contactNo;
 	
-	//remove everything, and remain only the adminNo and password?
-	
-	Admin(String facultyNo, String password, String firstName, String middleName, 
-			String lastName, String email, String contactNo, String address) {
+	public Admin(String facultyNo, String password, String firstName, String middleName, String lastName, 
+			String email, String contactNo) throws SQLException {
 		
 		this.adminNo = facultyNo;
 		this.password = password;
 		this.firstName = firstName;
+		this.middleName = middleName;
 		this.lastName = lastName;
 		this.email = email;
 		this.contactNo = contactNo;
@@ -27,7 +31,31 @@ public class Admin {
 		return password;
 	}
 	
-	public void setPassword(String password) {
-		this.password = password;
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getMiddleName() {
+		return middleName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getContactNo() {
+		return contactNo;
+	}
+	
+	public void createStudentRecord(Student student) throws SQLException {
+		sql.createStudentRecord(student);
+	}
+	
+	public void deleteStudentRecord(Student student) throws SQLException {
+		sql.deleteStudentRecord(student);
 	}
 }
