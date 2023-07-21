@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,50 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class SMSDialog {
-	
-//	JDialog dialog;
-//	JLabel lblMainMessage, lblMessage1, lblMessage2;
-//	JButton bttnOK;
-	
-//	SMSDialogs(JFrame frame) {
-//		dialog = new JDialog(frame, "Message");
-////		dialog.setSize(300, 125);
-//		dialog.setLayout(null);
-//		dialog.setResizable(false);
-//		dialog.setLocationRelativeTo(null);
-//		dialog.getContentPane().setBackground(new Color(187, 37, 61));
-//		
-//		lblMainMessage = new JLabel();
-////		lblMainMessage.setText(null);
-////		lblMainMessage.setBounds(0, 10, 280, 25);
-//		lblMainMessage.setHorizontalAlignment(SwingConstants.CENTER);
-//		lblMainMessage.setFont(new Font("Tahoma", 1, 14));
-//		lblMainMessage.setForeground(new Color(255, 255, 255));
-//		
-//		bttnOK = new JButton("OK");
-//		bttnOK.setBounds(105, 45, 70, 22);
-//		bttnOK.setFont(new Font("Tahoma", 1, 12));
-//		bttnOK.setForeground(new Color(0, 0, 0));
-//		bttnOK.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				dialog.dispose();
-//			}
-//		});
-//	}
-	
-//	public void showMessageDialog(String message) {
-//		
-//		dialog.setSize(300, 125);
-//		
-//		lblMainMessage.setText(message);
-//		lblMainMessage.setBounds(0, 10, 280, 25);
-//		
-//
-//		dialog.add(lblMainMessage);
-//		dialog.add(bttnOK);
-//		dialog.setVisible(true);
-//	}
 	
 	public void showMessageDialog(JFrame frame, String message) {
 		
