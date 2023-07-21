@@ -1,3 +1,9 @@
+/* This class contains custom JDialogs for Student Management System. 
+ * 
+ * For now, it has overloaded constructors of "showMessageDialog()" method - accepting 1 message, 2 messages, and
+ * three messages. It is still subject for edit, to shorten and simplify the code structure.
+ */
+
 package ui;
 
 import java.awt.Color;

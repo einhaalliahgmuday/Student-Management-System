@@ -18,14 +18,14 @@ public class SMSLogin extends JFrame implements ActionListener {
 	SMSDialog smsDialogs = new SMSDialog();		//@SMSDialog is instantiated to display dialogs if login errors occur.
 	
 	//Components used
-	private JPanel panel1, panel2;
-	private JLabel lblSMS1, lblSMS2, lblLogin, lblUserID, lblPassword;
-	private JSeparator sprtrUserID, sprtrPassword;
-	private JRadioButton rdbttnProfessor, rdbttnAdmin;
-	private ButtonGroup bttngrpUser;
-	private JTextField txtfldUserID;
-	private JPasswordField txtfldPassword;
-	private JButton bttnLogin;
+	JPanel panel1, panel2;
+	JLabel lblSMS1, lblSMS2, lblLogin, lblUserID, lblPassword;
+	JSeparator sprtrUserID, sprtrPassword;
+	JRadioButton rdbttnProfessor, rdbttnAdmin;
+	ButtonGroup bttngrpUser;
+	JTextField txtfldUserID;
+	JPasswordField txtfldPassword;
+	JButton bttnLogin;
 	
 	SMSLogin() throws SQLException {	
 		

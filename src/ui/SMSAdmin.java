@@ -16,15 +16,17 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 
 	Admin admin;
 	StudentRecords studentRecords;
-	TableModel tableModel = TableModel.ALL;
-	Student student;
-	SMSDialog smsDialog = new SMSDialog();
+	TableModel tableModel = TableModel.ALL;		// This is an enum used to determine if a table must display all the data, or filter according to the search input.
+	Student student;	// This instance will contain the student record to be created or deleted.
+	SMSDialog smsDialog = new SMSDialog();	// The class used to display message dialogs
 	
+	// Components for the main frame
 	JLabel lblSMS;
 	JTabbedPane tabbedPane;
 	JPanel pnlStudent;
 	JButton bttnLogout;
 	
+	// Components for the panel where student record is created
 	JPanel studentPnlAddStudent;
 	JLabel lblStudentNo, lblFirstName, lblMiddleName, lblLastName, lblSex, lblBirthday, lblSectionCode, 
 			lblEmail, lblContactNo, lblAddress;
@@ -35,6 +37,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 	JComboBox cmbbxSectionCode;
 	JButton bttnAdd, bttnUpdate, bttnClear;
 	
+	// Components for the panel that contains the table of student records
 	JPanel studentPnlTable;
 	JLabel lblSearch;
 	JComboBox cmbbxSearch;
@@ -44,8 +47,8 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 	JScrollPane scrollPane;
 	
 	SMSAdmin(Admin admin) throws SQLException {
-		this.admin = admin;
-		studentRecords = new StudentRecords();
+		this.admin = admin;		// The Admin
+		studentRecords = new StudentRecords();		//The student records
 		
 		setTitle("Student Management System - Admin");
 		setSize(1050, 650);
@@ -60,7 +63,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		lblSMS.setFont(new Font("Tahoma", 1, 30));
 		lblSMS.setForeground(new Color(255, 255, 255));
 		
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();		// This is the tabbed pane.
 		tabbedPane.setBounds(20, 60, 995, 520);
 		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 14));
 		tabbedPane.setForeground(new Color(0, 0, 0));
@@ -80,7 +83,15 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		setVisible(true);
 	}
 	
+	
+	/* This method returns the tab that contains the panels for adding and displaying student records. It is added in
+	 * the JTabbedPane. @SMSAdmin has only one tab for now, but it is scalable. If we want to add new functionalities
+	 * in the future, such as creating @Professor accounts, creating @FacultyLoad, and printing grades, we can
+	 * just add new tabs.
+	 */
 	public JPanel getStudentTab() throws SQLException {
+		
+		//The panel for creating a student record
 		
 		lblStudentNo = new JLabel("Student No:");
 		lblStudentNo.setBounds(17, 42, 100, 22);
@@ -261,6 +272,8 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		studentPnlAddStudent.add(bttnClear);
 		
 		
+		//The panel for the table of student records
+		
 		lblSearch = new JLabel("Search");
 		lblSearch.setBounds(17, 17, 60, 22);
 		lblSearch.setFont(new Font("Tahoma", 1, 12));
@@ -296,6 +309,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		bttnRefresh.setForeground(new Color(0, 0, 0));
 		bttnRefresh.addActionListener(this);
 		
+		//This is the table.
 		tblStudentRecords = new JTable();
 		tblStudentRecords.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblStudentRecords.setRowHeight(22);
@@ -307,12 +321,18 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		
 		displayStudentRecordsTable();
 		
+		/* This is the mouse listener of the table. If a row is double-clicked, that student record is inserted
+		 * in the instance "student".
+		 */
 		tblStudentRecords.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					int rowIndex = tblStudentRecords.getSelectedRow();	
+					int rowIndex = tblStudentRecords.getSelectedRow();
 					try {
+						/* The value of "Student No" column is retrieve using "getValueAt()" method of JTable.
+						 * The method "getStudentRecordByStudentNo" of @StudentRecords is then called to get the @Student.
+						 */
 						student = studentRecords.getStudentRecordByStudentNo(tblStudentRecords.getValueAt(rowIndex, 0).toString());
 						
 					} catch (SQLException e1) {
@@ -350,10 +370,10 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		return pnlStudent;
 	}
 	
-	//This method displays the student records in the table.
+	//This method displays the student records in the table by setting the table model.
 	public void displayStudentRecordsTable() throws SQLException {
 		
-		DefaultTableModel tblmdlStudentRecords = new DefaultTableModel() {		//This is the data model.
+		DefaultTableModel tblmdlStudentRecords = new DefaultTableModel() {		//This is the table model.
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -454,7 +474,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 	 * It is a JDialog. If the user click the button 'Yes', the account will log out, that is, @SMSAdmin will dispose
 	 * and return to @SMSLogin. 
 	 */
-	
 	public void confirmLogout() {
 		
 		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
@@ -505,7 +524,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == bttnLogout) {		//This action is for logging out of the account. 
+		if (e.getSource() == bttnLogout) {		//This action is for logging out of @SMSAdmin account. 
 			// The method "confirmLogout()" is called, which is an abstract method of @SMSUser interface implemented by @SMSAdmin.
 			confirmLogout();
 		} 
@@ -586,7 +605,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					//This catches all other SQL Exceptions.
 					e1.printStackTrace();
 				} catch (Exception e1) {
-					//This catches all other Exceptions.
+					//This catches all other Exceptions, and displays a dialog.
 					smsDialog.showMessageDialog(this, "Student Not Created", "Please make sure you entered valid", "information.");
 				}
 				
@@ -639,10 +658,10 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			student = null;
 		}
 		else if (e.getSource() == bttnDelete) {			//This action deletes a student record.
-			//It checks first if the instance student is not null, that is, the @Admin selected a student record in the table.
+			//It checks first if the instance "student" is not null, that is, the @Admin selected a student record in the table.
 			if (student != null) {
 				try {
-					/* If the instance student is not null, the method "deleteStudentRecord()" of @Admin is called 
+					/* If the instance "student" is not null, the method "deleteStudentRecord()" of @Admin is called 
 					 * to delete the student record. A dialog displays if the student record is successfully deleted.
 					 * Then, the table is refreshed by calling the "displayStudentRecordsTable()" method.
 					 */
@@ -659,7 +678,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		}
 		
 		/* Other Notes:
-		 * The instance student is set to null everytime an action is performed. This is because the instance is shared by actions
+		 * The instance "student" is set to null everytime an action is performed. This is because the instance is shared by actions
 		 * add student and delete student. It is to ensure that the actions will not be confused of which @Student 
 		 * is being referred.
 		 */

@@ -21,35 +21,40 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 	
 	FacultyLoad facultyLoad;
 	Professor professor;
-	TableModel tableModel = TableModel.ALL;
-	StudentGrade studentGrade;
-	SMSDialog smsDialog = new SMSDialog(); 
+	TableModel tableModel = TableModel.ALL;		// This is an enum used to determine if a table must display all the data, or filter according to the search input.
+	StudentGrade studentGrade;	// This instance will contain the @StudentGrade to be updated.
+	SMSDialog smsDialog = new SMSDialog(); 	// The class used to display message dialogs
 	
+	// Components for the main frame
 	JLabel lblGradingSheet;
 	JPanel pnlMain;
 	
+	// Components for the panel that contains the description of the faculty load
 	JPanel pnlLoadDescription;
 	JLabel lblSchoolYear, lblSchoolYearV, lblSemester, lblSemesterV, lblSubject, lblSubjectV, lblSection, 
 			lblSectionV, lblSchedule, lblScheduleV;
 	
+	// Components for displaying and updating @StudentGrade
 	JPanel pnlGradingSheet;
 	JLabel lblStudentNo, lblStudentNoV, lblName, lblNameV, lblMidtermGrade, lblFinalsGrade, lblFinalRating, lblTotalAttendance, lblRemark;
 	JTextField txtfldMidtermGrade, txtfldFinalsGrade, txtfldFinalRating, txtfldTotalAttendance;
 	JComboBox cmbbxRemark;
 	JButton bttnClear, bttnCompute, bttnSave;
 	
+	// Components for searching in the table
 	JPanel pnlSearch;
 	JLabel lblSearch;
 	JTextField txtfldSearch;
 	JButton bttnSearch, bttnRefresh;
 	
+	// Components for the table of grading sheet
 	JPanel pnlTable;
 	JTable tblGradingSheet;
 	JScrollPane scrollPane;
 	
 	SMSGradingSheet(Professor professor, FacultyLoad facultyLoad) throws SQLException {
-		this.professor = professor;
-		this.facultyLoad = facultyLoad;
+		this.professor = professor;		// The Professor
+		this.facultyLoad = facultyLoad;		// The faculty load
 		
 		setTitle("Grading Sheet - Student Management System");
 		setSize(1050, 650);
@@ -63,6 +68,8 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		lblGradingSheet.setFont(new Font("Tahoma", 1, 20));
 		lblGradingSheet.setForeground(new Color(255, 255, 255));
 		
+		
+		// The panel that contains the description of the faculty load.
 		
 		lblSchoolYear = new JLabel("School Year");
 		lblSchoolYear.setBounds(5, 10, 138, 18);
@@ -139,6 +146,8 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		pnlLoadDescription.add(lblSchedule);
 		pnlLoadDescription.add(lblScheduleV);
 		
+		
+		// The panel for displaying and updating @StudentGrade
 		
 		lblStudentNo = new JLabel("Student No:");
 		lblStudentNo.setBounds(20, 15, 120, 22);
@@ -261,6 +270,8 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		pnlGradingSheet.add(bttnClear);
 		
 		
+		// The panel for searching in the table
+		
 		lblSearch = new JLabel("Search Student No: ");
 		lblSearch.setBounds(10, 10, 135, 22);
 		lblSearch.setFont(new Font("Tahoma", 1, 12));
@@ -294,6 +305,8 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		pnlSearch.add(bttnRefresh);
 		
 		
+		// The panel for the table
+		
 		tblGradingSheet = new JTable();
 		tblGradingSheet.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblGradingSheet.setRowHeight(22);
@@ -305,17 +318,24 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		
 		displayGradingSheetTable();
 		
+		/* This is the mouse listener of the table. If a row is double-clicked, that student is inserted
+		 * in the instance "studentGrade", and is diplayed in the panel.
+		 */
 		tblGradingSheet.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					int rowIndex = tblGradingSheet.getSelectedRow();	
 					try {
+						/* The value of "Student No" column is retrieve using "getValueAt()" method of JTable.
+						 * The method "getStudentGradeByStudentNo" of @FacultyLoad is then called to get the @StudentGrade.
+						 */
 						studentGrade = facultyLoad.getStudentGradeByStudentNo(tblGradingSheet.getValueAt(rowIndex, 0).toString());
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
 					
+					// The information of @StudentGrade is diplayed, and the @Professor can update the grades.
 					lblStudentNoV.setText(studentGrade.getStudentNo());
 					lblNameV.setText(studentGrade.getStudentName());
 					txtfldMidtermGrade.setText(Double.toString(studentGrade.getMidtermGrade()));
@@ -356,24 +376,27 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
+	//This method displays the grading sheet in the table by setting the table model.
 	public void displayGradingSheetTable() throws SQLException {
 		
-		DefaultTableModel tblmdlGradingSheet = new DefaultTableModel() {
+		DefaultTableModel tblmdlGradingSheet = new DefaultTableModel() {	//This is the table model.
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		
+		//This sets the column names.
 		String[] columnNames = {"Student No", "Name", "Midterm Grade", "Finals Grade", "Final Rating", 
 				"Total Attendance", "Remark"};
 		for (String columnName : columnNames) {
 			tblmdlGradingSheet.addColumn(columnName);
 		}
 		
+		//This sets the rows' data.
 		Object[] rowData = new Object[columnNames.length];
 		switch(tableModel) {
-			case ALL:
+			case ALL:		//If @TableModel is set to ALL, all @StudentGrade of the grading sheet will be displayed. 
 				for (var gradeSheet : facultyLoad.getGradingSheet()) {
 					rowData[0] = gradeSheet.getStudentNo();
 					rowData[1] = gradeSheet.getStudentName();
@@ -387,7 +410,7 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 				}
 				
 				break;
-			case SEARCH:
+			case SEARCH:	//If @TableModel is set to SEARCH, it will display the @StudentGrade found.
 				for (var gradeSheet : facultyLoad.getGradingSheet()) {
 					if (gradeSheet.getStudentNo().equals(txtfldSearch.getText())) {
 						rowData[0] = gradeSheet.getStudentNo();
@@ -405,12 +428,14 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 				break;		
 		}
 		
+		//If no results found, the table will not refresh.
 		if (tblmdlGradingSheet.getRowCount() == 0) {
 			smsDialog.showMessageDialog(this, "No Results Found!");
 		}
 		else {
 			tblGradingSheet.setModel(tblmdlGradingSheet);
 			
+			//This sets the table design, such as the columns' width and header color.
 			JTableHeader tblhdrClassList = tblGradingSheet.getTableHeader();
 			tblhdrClassList.setBackground(new Color(245, 245, 245));
 			tblhdrClassList.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -424,8 +449,12 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == bttnSearch) {
+		if (e.getSource() == bttnSearch) {	//This is the action for Search.
+			//It checks first if the textfield for Search is not empty, otherwise it will not proceed.
 			if (txtfldSearch.getText().trim().isEmpty() == false) {
+				/* To display the search results in the table, the value of the instance "tableModel" is changed into
+				 * @TableModel.SEARCH. The method "displayClassListTable()" is then called again to refresh the table.
+				 */
 				tableModel = TableModel.SEARCH;
 				try {
 					displayGradingSheetTable();
@@ -434,7 +463,10 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 				}
 			}
 		}
-		else if (e.getSource() == bttnRefresh) {
+		else if (e.getSource() == bttnRefresh) {	//This action refreshes the table.
+			/* The value of the instance "tableModel" is changed back into @TableModel.ALL, and the method "displayGradingSheetTable()"
+			 * is called again to refresh the table. The textfield for Search is also cleared.
+			 */
 			tableModel = TableModel.ALL;
 			txtfldSearch.setText("");
 			try {
@@ -443,8 +475,15 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
 		}
-		else if (e.getSource() == bttnSave) {
+		else if (e.getSource() == bttnSave) {	// This action is for saving the updated @StudentGrade.
+			// It checks first if the instance "studentGrade" is not null, that is, the @Professor selected a student in the table.
 			if (studentGrade != null) {
+				// If the instance "studentGrade" is not null, it will proceed.
+				
+				/*The inputs for midterm grade and finals grade are placed into new Double, which will be used by the conditional
+				 * statements. The input for remark is also placed into a new String, so that if the selection is the default ("-----"), 
+				 * the updated remark is empty.
+				 */
 				double midtermGrade = Double.parseDouble(txtfldMidtermGrade.getText());
 				double finalsGrade = Double.parseDouble(txtfldFinalsGrade.getText());
 				String remark = cmbbxRemark.getSelectedItem().toString();
@@ -452,31 +491,41 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 					remark = "";
 				}
 				
-				if ((midtermGrade > 5 && midtermGrade < 1) || (finalsGrade > 5 && finalsGrade < 1)) {
+				if (midtermGrade > 5 || midtermGrade < 1 || finalsGrade > 5 || finalsGrade < 1) {
+					/* If the inputs for midterm grade or finals grade is less than 1 or greater than 5, a dialog will display
+					 * which inform the professor of invalid input.
+					 */
 					smsDialog.showMessageDialog(this, "Invalid Input", "Please enter valid grade inputs.");
 				}
 				else {
+					/* If all conditions are met, the instance "studentGrade" is updated using its setters. Then the method "updateStudentGrade()"
+					 * of @Professor is called, throwing the instance as parameter.
+					 */
 					studentGrade.setMidtermGrade(midtermGrade);
 					studentGrade.setFinalsGrade(finalsGrade);
 					studentGrade.setTotalAttendace(Integer.parseInt(txtfldTotalAttendance.getText()));
 					studentGrade.setRemark(remark);
 					
 					try {
-						professor.updateStudentGrade(studentGrade);
-						smsDialog.showMessageDialog(this, "Student Grade Saved");
+						professor.updateStudentGrade(studentGrade);		//This is the code that updates the @StudentGrade.
+						smsDialog.showMessageDialog(this, "Student Grade Saved");	//If the @StudentGrade is successfully updated, a dialog will inform the professor.
 						
 						txtfldFinalRating.setText(Double.toString(studentGrade.getFinalRating()));
 						
-						displayGradingSheetTable();
+						displayGradingSheetTable();		//The table is then refreshed.
+						
+						// The panel is not cleared in case the @Professor has forgot to change something, or mistakes the inputted grades.
 					} catch (SQLException e1) {
-						e1.printStackTrace();
+						// This catches all SQL Exceptions.
+						e1.printStackTrace();	
 					} catch (Exception e1) {
+						// This catches all other Exceptions, and displays a dialog.
 						smsDialog.showMessageDialog(this, "Grades Not Saved", "Please make sure you entered valid", "inputs.");
 					}
 				}
 			}
 		}
-		else if (e.getSource() == bttnCompute) {
+		else if (e.getSource() == bttnCompute) {	//This action computes the average of the midterm grade and finals grade inputs.
 			if (studentGrade != null) {
 				double midtermGrade = Double.parseDouble(txtfldMidtermGrade.getText());
 				double finalsGrade = Double.parseDouble(txtfldFinalsGrade.getText());
@@ -484,7 +533,7 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 				txtfldFinalRating.setText(Double.toString(finalRating));
 			}
 		}
-		else if (e.getSource() == bttnClear) {
+		else if (e.getSource() == bttnClear) {		// This action clears the panel for displaying and updating a @StudentGrade.
 			lblStudentNoV.setText("");
 			lblNameV.setText("");
 			txtfldMidtermGrade.setText("");

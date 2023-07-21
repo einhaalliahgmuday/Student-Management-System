@@ -1,3 +1,7 @@
+/* This is the UI for Professor. It contains the faculty loads, and has buttons to open its @SMSClassList and 
+ * @SMSGradingSheet.
+ */
+
 package ui;
 
 import javax.swing.*;
@@ -19,10 +23,15 @@ import java.util.ArrayList;
 public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 	
 	Professor professor;
-	FacultyLoad selectedFacultyLoad;
+	FacultyLoad selectedFacultyLoad;	//This is an instance for the selected faculty load.
+	
+	/* The @SMSGradingSheet and @SMSClassList that the @Professor will open are added into an ArrayList. This is for 
+	 * the purpose of disposing all the frames opened when @Professor logged out of @SMSFaculty.
+	 */
 	ArrayList<SMSGradingSheet> gradingSheets = new ArrayList<SMSGradingSheet>();
 	ArrayList<SMSClassList> classLists = new ArrayList<SMSClassList>();
 	
+	// Components used
 	JLabel lblSMS, lblFacultyLoad;
 	JButton bttnClassList, bttnGradingSheet, bttnLogout;
 	JPanel panel;
@@ -31,7 +40,7 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 	
 	SMSFaculty(Professor professor) throws SQLException {
 		
-		this.professor = professor;
+		this.professor = professor;		//The Professor
 		
 		setTitle("Student Management System - Professor");
 		setSize(1050, 650);
@@ -78,6 +87,7 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 		bttnGradingSheet.addActionListener(this);
 		
 		
+		// This is the table for the faculty loads.
 		tblFacultyLoad = new JTable();
 		tblFacultyLoad.setRowHeight(30);
 		tblFacultyLoad.setGridColor(new Color(0, 0, 0));
@@ -97,6 +107,9 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 			tblFacultyLoad.getColumnModel().getColumn(i).setPreferredWidth(250);
 		}
 		
+		/* This is the mouse listener for the table. When a row is double-clicked, its index is used to get
+		 * that faculty load using "get()" method of ArrayList, then the value is inserted in the instance "selectedFacultyLoad".
+		 */
 		tblFacultyLoad.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -125,23 +138,26 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 		setVisible(true);
 	}
 	
+	//This method returns the table model for the faculty loads.
 	public DefaultTableModel getFacultyLoadTableModel() throws SQLException {
 		
-		DefaultTableModel tblmdlFacultyLoad = new DefaultTableModel() {
+		DefaultTableModel tblmdlFacultyLoad = new DefaultTableModel() {		// This is the table model.
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		
+		// This sets the column names.
 		String[] columnNames = {"#", "Subject Code", "Subject Description", "Section Code", "Schedule"};
 		for (String columnName : columnNames) {
 			tblmdlFacultyLoad.addColumn(columnName);
 		}
 		
+		// This sets the rows' data. It calls the "getFacultyLoads()" method of @Professor, adds the data in the row.
 		Object[] rowData = new Object[columnNames.length];
-		int no = 1;
-		for (var load : professor.getFacultyLoads()) {
+		int no = 1;		// This variable is added to the table as a numbering.
+		for (var load : professor.getFacultyLoads()) {	
 			rowData[0] = no;
 			rowData[1] = load.getSubjectCode();
 			rowData[2] = load.getSubjectDescription();
@@ -150,12 +166,16 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 			
 			tblmdlFacultyLoad.addRow(rowData);
 			
-			no++;
+			no++;	// The variable "no" increments here.
 		}
 		
 		return tblmdlFacultyLoad;
 	}
 	
+	/* This is the implementation of the abstract method "confirmLogout()" from @SMSUser interface.
+	 * It is a JDialog. If the user click the button 'Yes', the account will log out, that is, @SMSAdmin will dispose
+	 * (including all the @SMSGradingSheet and @SMSClassList opened), and returns to @SMSLogin. 
+	 */
 	public void confirmLogout() {
 		
 		JDialog dlgLogout = new JDialog(this, "Confirm Logout");
@@ -213,12 +233,19 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == bttnLogout) {
+		if (e.getSource() == bttnLogout) {		//This action is for logging out of @SMSFaculty account. 
+			/* The method "confirmLogout()" is called, which is an abstract method of @SMSUser interface 
+			 * implemented by @SMSAdmin. It disposes @SMSAdmin, including all the @SMSGradingSheet and @SMSClassList 
+			 * opened.
+			 */
 			confirmLogout();
 		} 
 		else if (e.getSource() == bttnClassList) {
 			try {
-				if (selectedFacultyLoad != null) {
+				if (selectedFacultyLoad != null) {	
+					/* The "selectedFacultyLoad" is checked first it is null or not to avoid NullPointerException.
+					 * If it is not null, a new @SMSClassList is opened and added to the ArrayList of @ClassList.
+					 */
 					classLists.add(new SMSClassList(selectedFacultyLoad));
 				}
 			} catch (SQLException e1) {
@@ -228,6 +255,9 @@ public class SMSFaculty extends JFrame implements ActionListener, SMSUser {
 		else if (e.getSource() == bttnGradingSheet) {
 			try {
 				if (selectedFacultyLoad != null) {
+					/* The "selectedFacultyLoad" is checked first it is null or not to avoid NullPointerException.
+					 * If it is not null, a new @SMSGradingSheet is opened and added to the ArrayList of @GradingSheet.
+					 */
 					gradingSheets.add(new SMSGradingSheet(professor, selectedFacultyLoad));
 				}
 			} catch (SQLException e1) {

@@ -15,24 +15,27 @@ import models.FacultyLoad;
 public class SMSClassList extends JFrame implements ActionListener {
 	
 	FacultyLoad facultyLoad;
-	TableModel tableModel = TableModel.ALL;
-	SMSDialog smsDialog = new SMSDialog();
+	TableModel tableModel = TableModel.ALL;	// This is an enum used to determine if a table must display all the data, or filter according to the search input.
+	SMSDialog smsDialog = new SMSDialog();	// The class used to display message dialogs
 	
+	// Components for the main frame
 	JLabel lblClassList;
 	JPanel pnlMain, pnlLoadDescription, pnlTable;
 	
+	// Components for the panel that contains the description of the faculty load
 	JLabel lblSchoolYear, lblSchoolYearV, lblSemester, lblSemesterV, lblSection, lblSectionV, 
 			lblSubject, lblSubjectV, lblSchedule, lblScheduleV;
 	
+	// Components for the panel that contains the table of class list
 	JLabel lblSearch;
 	JTextField txtfldSearch;
-	JButton bttnSearch, bttnClear, bttnRefresh;
+	JButton bttnSearch, bttnRefresh;
 	JTable tblClassList;
 	JScrollPane scrollPane;
 	
 	SMSClassList(FacultyLoad facultyLoad) throws SQLException {
 		
-		this.facultyLoad = facultyLoad;
+		this.facultyLoad = facultyLoad;		//The faculty load
 		
 		setTitle("Class List - Student Management System");
 		setSize(1050, 650);
@@ -46,6 +49,8 @@ public class SMSClassList extends JFrame implements ActionListener {
 		lblClassList.setFont(new Font("Tahoma", 1, 20));
 		lblClassList.setForeground(new Color(255, 255, 255));
 		
+		
+		// The panel that contains the descriptions of the faculty load.
 		
 		lblSchoolYear = new JLabel("School Year");
 		lblSchoolYear.setBounds(0, 10, 168, 18);
@@ -123,6 +128,8 @@ public class SMSClassList extends JFrame implements ActionListener {
 		pnlLoadDescription.add(lblScheduleV);
 		
 		
+		// The panel that contains the table of class list.
+		
 		lblSearch = new JLabel("Search Student No:");
 		lblSearch.setBounds(10, 10, 120, 22);
 		lblSearch.setFont(new Font("Tahoma", 1, 12));
@@ -147,6 +154,7 @@ public class SMSClassList extends JFrame implements ActionListener {
 		bttnRefresh.addActionListener(this);
 		
 		
+		// This is the table.
 		tblClassList = new JTable();
 		tblClassList.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tblClassList.setRowHeight(22);
@@ -187,24 +195,28 @@ public class SMSClassList extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	
+	
+	//This method displays the class list in the table by setting the table model.
 	public void displayClassListTable() throws SQLException {
 		
-		DefaultTableModel tblmdlClassList = new DefaultTableModel() {
+		DefaultTableModel tblmdlClassList = new DefaultTableModel() {		//This is the table model.
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		
+		//This sets the column names.
 		String[] columnNames = {"Student No", "Last Name", "First Name", "Middle Name", "Sex", 
 				"Birthday", "Section Code", "Email", "Contact No", "Address"};
 		for (String columnName : columnNames) {
 			tblmdlClassList.addColumn(columnName);
 		}
 		
+		//This sets the rows' data. 
 		Object[] rowData = new Object[columnNames.length];
 		switch(tableModel) {
-			case ALL:
+			case ALL:		//If @TableModel is set to ALL, all data in the student records will be displayed. 
 				for (var student : facultyLoad.getClassList()) {
 					rowData[0] = student.getStudentNo();
 					rowData[1] = student.getLastName();
@@ -221,7 +233,8 @@ public class SMSClassList extends JFrame implements ActionListener {
 				}
 				
 				break;
-			case SEARCH:
+				
+			case SEARCH:	//If @TableModel is set to SEARCH, it will display the @Student found.
 				for (var student : facultyLoad.getClassList()) {
 					if (student.getStudentNo().equals(txtfldSearch.getText())) {
 						rowData[0] = student.getStudentNo();
@@ -242,12 +255,14 @@ public class SMSClassList extends JFrame implements ActionListener {
 				break;		
 		}
 		
+		//If no results found, the table will not refresh.
 		if (tblmdlClassList.getRowCount() == 0) {
 			smsDialog.showMessageDialog(this, "No Results Found!");
 		}
 		else {
 			tblClassList.setModel(tblmdlClassList);
 			
+			//This sets the table design, such as the columns' width and header color.
 			JTableHeader tblhdrClassList = tblClassList.getTableHeader();
 			tblhdrClassList.setBackground(new Color(245, 245, 245));
 			tblhdrClassList.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -261,8 +276,12 @@ public class SMSClassList extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == bttnSearch) {
+		if (e.getSource() == bttnSearch) {	//This is the action for Search.
+			//It checks first if the textfield for Search is not empty, otherwise it will not proceed.
 			if (txtfldSearch.getText().trim().isEmpty() == false) {
+				/* To display the search results in the table, the value of the instance "tableModel" is changed into
+				 * @TableModel.SEARCH. The method "displayClassListTable()" is then called again to refresh the table.
+				 */
 				tableModel = TableModel.SEARCH;
 				try {
 					displayClassListTable();
@@ -271,10 +290,10 @@ public class SMSClassList extends JFrame implements ActionListener {
 				}
 			}
 		}
-		else if (e.getSource() == bttnClear) {
-			txtfldSearch.setText("");
-		}
-		else if (e.getSource() == bttnRefresh) {
+		else if (e.getSource() == bttnRefresh) {	//This action refreshes the table.
+			/* The value of the instance "tableModel" is changed back into @TableModel.ALL, and the method "displayClassListTable()"
+			 * is called again to refresh the table. The textfield for Search is also cleared.
+			 */
 			try {
 				tableModel = TableModel.ALL;
 				displayClassListTable();
