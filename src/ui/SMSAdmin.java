@@ -350,24 +350,27 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		return pnlStudent;
 	}
 	
+	//This method displays the student records in the table.
 	public void displayStudentRecordsTable() throws SQLException {
 		
-		DefaultTableModel tblmdlStudentRecords = new DefaultTableModel() {
+		DefaultTableModel tblmdlStudentRecords = new DefaultTableModel() {		//This is the data model.
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 		
+		//This sets the column names.
 		String[] columnNames = {"Student No", "First Name", "Middle Name", "Last Name", "Sex", 
 				"Birthday", "Section Code", "Email", "Contact No", "Address"};
 		for (String columnName : columnNames) {
 			tblmdlStudentRecords.addColumn(columnName);
 		}
 		
+		//This sets the rows' data. 
 		Object[] rowData = new Object[columnNames.length];
 		switch(tableModel) {
-			case ALL:
+			case ALL:	//If @TableModel is set to ALL, all data in the student records will be displayed. 
 				for (var student : studentRecords.get()) {
 					rowData[0] = student.getStudentNo();
 					rowData[1] = student.getFirstName();
@@ -384,6 +387,10 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				}
 				
 				break;
+				
+			/* If @TableModel is set to SEARCH, it will only display the student/s found based on the
+			 * search input. The admin may search for a section or a student.
+			 */
 			case SEARCH:
 				for (var student : studentRecords.get()) {
 					if (cmbbxSearch.getSelectedItem().toString().equals("Student No")) {
@@ -423,12 +430,14 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				break;		
 		}
 		
+		//If no results found, the table will not refresh.
 		if (tblmdlStudentRecords.getRowCount() == 0) {
 			smsDialog.showMessageDialog(this, "No Results Found!");
 		}
 		else {
 			tblStudentRecords.setModel(tblmdlStudentRecords);
 			
+			//This sets the table design, such as the columns' width and header color.
 			JTableHeader tblhdrStudentRecords = tblStudentRecords.getTableHeader();
 			tblhdrStudentRecords.setBackground(new Color(245, 245, 245));
 			tblhdrStudentRecords.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -439,6 +448,12 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			}
 		}
 	}
+	
+	
+	/* This is the implementation of the abstract method "confirmLogout()" from @SMSUser interface.
+	 * It is a JDialog. If the user click the button 'Yes', the account will log out, that is, @SMSAdmin will dispose
+	 * and return to @SMSLogin. 
+	 */
 	
 	public void confirmLogout() {
 		
@@ -490,15 +505,15 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == bttnLogout) {			
+		if (e.getSource() == bttnLogout) {		//This action is for logging out of the account. 
+			// The method "confirmLogout()" is called, which is an abstract method of @SMSUser interface implemented by @SMSAdmin.
 			confirmLogout();
 		} 
-		else if (e.getSource() == bttnAdd) {	//This action creates a student record.
+		else if (e.getSource() == bttnAdd) {	//This action creates the student record.
 			student = null;
 			
-			/*The input for birthday and sex is placed into a String, as textfields for birthYear, birthMonth,
-			 * and birthDay is separated and button group has no method that return the name selected item.
+			/*The inputs for birthday and sex are placed into new Strings, as textfields for birthYear, birthMonth,
+			 * and birthDay is separated and button group has no method that returns the title of the selected item.
 			 */
 			String birthday = txtfldBirthYear.getText()+"-"+txtfldBirthMonth.getText()+"-"+txtfldBirthDay.getText();
 			String sex = "";	
@@ -517,12 +532,13 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				
 				/*
 				 *  If textfields are null, or some of the necessary information were not provided, a dialog will
-				 *  appear which informs the Admin no student is added.
+				 *  appear which informs the Admin that no student is added.
 				 */
 				
 				smsDialog.showMessageDialog(this, "No Student Added", "Please fill-in the necessary information.");
 			}
 			else if (txtfldStudentNo.getText().length() < 15) {
+				
 				/* If the student number input is less than 15, which is the precise length, a dialog will
 				 * appear that the student number is invalid.
 				 */
@@ -530,7 +546,9 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				smsDialog.showMessageDialog(this, "Invalid Student Number", "Please enter a valid student number.");
 			}
 			else {
+				
 				//If all conditions are met, it will try to add the student, while catching the possible Exceptions.
+				
 				try {
 					/*The inputs are used to instantiate a @Student, which will be thrown as parameter in "createStudentRecord()"
 					 * method of the admin.
@@ -560,8 +578,8 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					tableModel = TableModel.ALL;
 					displayStudentRecordsTable();
 				} catch (SQLIntegrityConstraintViolationException e1) {		
-					/*This catches a duplicate student number, that is, if the student number already
-					 * exists in the system.
+					/* This catches a duplicate student number, that is, if the student number already
+					 * exists in the system. When this Exception occurs, a dialog will inform the admin.
 					 */
 					smsDialog.showMessageDialog(this, "Duplicate Student Number", "The student number you entered already", "exists.");
 				} catch (SQLException e1) {
@@ -575,7 +593,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				student = null;
 			}
 		}
-		else if (e.getSource() == bttnClear) {
+		else if (e.getSource() == bttnClear) {		//This action clears the inputs in creating a student record.
 			txtfldStudentNo.setText(""); 
 			txtfldFirstName.setText(""); 
 			txtfldMiddleName.setText(""); 
@@ -591,8 +609,12 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			
 			student = null;
 		}
-		else if (e.getSource() == bttnSearch) {
+		else if (e.getSource() == bttnSearch) {		//This is the action for Search.
+			//It checks first if the textfield for Search is not empty, otherwise it will not proceed.
 			if (txtfldSearch.getText().trim().isEmpty() == false) {
+				/* To display the search results in the table, the value of the instance "tableModel" is changed into
+				 * @TableModel.SEARCH. The method "displayStudentRecordsTable()" is then called again to refresh the table.
+				 */
 				tableModel = TableModel.SEARCH;
 				try {
 					displayStudentRecordsTable();
@@ -602,7 +624,10 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			}
 			student = null;
 		}
-		else if (e.getSource() == bttnRefresh) {
+		else if (e.getSource() == bttnRefresh) {		//This action refreshes the table.
+			/* The value of the instance "tableModel" is changed back into @TableModel.ALL, and the method "displayStudentRecordsTable()"
+			 * is called again to refresh the table. The textfield for Search is also cleared.
+			 */
 			tableModel = TableModel.ALL;
 			txtfldSearch.setText("");
 			try {
@@ -613,9 +638,14 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			
 			student = null;
 		}
-		else if (e.getSource() == bttnDelete) {
+		else if (e.getSource() == bttnDelete) {			//This action deletes a student record.
+			//It checks first if the instance student is not null, that is, the @Admin selected a student record in the table.
 			if (student != null) {
 				try {
+					/* If the instance student is not null, the method "deleteStudentRecord()" of @Admin is called 
+					 * to delete the student record. A dialog displays if the student record is successfully deleted.
+					 * Then, the table is refreshed by calling the "displayStudentRecordsTable()" method.
+					 */
 					admin.deleteStudentRecord(student);
 					smsDialog.showMessageDialog(this, "Student Record Deleted");
 					displayStudentRecordsTable();
@@ -626,8 +656,13 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				}
 				student = null;
 			}
-		
 		}
+		
+		/* Other Notes:
+		 * The instance student is set to null everytime an action is performed. This is because the instance is shared by actions
+		 * add student and delete student. It is to ensure that the actions will not be confused of which @Student 
+		 * is being referred.
+		 */
 	}
 
 }

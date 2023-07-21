@@ -1,6 +1,4 @@
-/*
- * This class is the UI to login into an SMS account.
- */
+//This class is the UI to login into an SMS account.
 
 package ui;
 
@@ -16,9 +14,10 @@ import java.sql.SQLException;
 
 public class SMSLogin extends JFrame implements ActionListener {
 	
-	User user = new User();
-	SMSDialog smsDialogs = new SMSDialog();
+	User user = new User();		//@User is instantiated to validate user inputs of ID and password.
+	SMSDialog smsDialogs = new SMSDialog();		//@SMSDialog is instantiated to display dialogs if login errors occur.
 	
+	//Components used
 	private JPanel panel1, panel2;
 	private JLabel lblSMS1, lblSMS2, lblLogin, lblUserID, lblPassword;
 	private JSeparator sprtrUserID, sprtrPassword;
@@ -37,7 +36,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		
+		//Panel 1
 		lblSMS1 = new JLabel("Student Management");
 		lblSMS1.setBounds(45, 200, 450, 55);
 		lblSMS1.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -56,6 +55,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 		panel1.add(lblSMS2);
 		
 		
+		//Panel 2
 		lblLogin = new JLabel("Login");
 		lblLogin.setBounds(198, 100, 150, 55);
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 40));
@@ -65,8 +65,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 		rdbttnProfessor.setBounds(130, 190, 100, 25);
 		rdbttnProfessor.setBackground(null);
 		rdbttnProfessor.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		
-		
+			
 		rdbttnAdmin = new JRadioButton("Admin");
 		rdbttnAdmin.setBounds(311, 190, 100, 25);
 		rdbttnAdmin.setBackground(null);
@@ -139,9 +138,14 @@ public class SMSLogin extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//The user inputs are placed in new Strings, which will be used by the conditional statements. 
 		String userID = txtfldUserID.getText();
 		String password = new String(txtfldPassword.getPassword());
 		
+		/* If the selected user type is "Professor", the "loginAsProfessor()" method of @User class is called, which
+		 * returns an instance of @Professor. If the account is not found, the instance would be null and will not proceed to
+		 * @SMSProfessor.
+		 */
 		if (rdbttnProfessor.isSelected()) {
 			try {
 				Professor professor = user.loginAsProfessor(userID, password);
@@ -150,12 +154,17 @@ public class SMSLogin extends JFrame implements ActionListener {
 					new SMSFaculty(professor);
 				}
 				else {
-					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
+					//This is the dialog that displays when login fails.
+					smsDialogs.showMessageDialog(this, "Login Failed!", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		}
+		/* If the selected user type is "Admin", the "loginAsAdmin()" method of @User class is called, which returns
+		 * an instance of @Admin. If the account is not found, the instance would be null and will not proceed to
+		 * @SMSAdmin.
+		 */
 		else if (rdbttnAdmin.isSelected()) {
 			try {
 				Admin admin = user.loginAsAdmin(userID, password);
@@ -164,7 +173,8 @@ public class SMSLogin extends JFrame implements ActionListener {
 					new SMSAdmin(admin);
 				}
 				else {
-					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
+					//This is the dialog that displays when login fails.
+					smsDialogs.showMessageDialog(this, "Login Failed!", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();

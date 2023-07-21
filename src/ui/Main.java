@@ -31,10 +31,8 @@ public class Main {
 		 * 
 		 * Double-click on table to select
 		 * (for adding and deleting a student record, selecting a faculty load to view class list or grading sheet)
-		 * 
-		 * The comments will be updated by Saturday for better understanding.
 		 */
 
 	}
-
+	
 }
