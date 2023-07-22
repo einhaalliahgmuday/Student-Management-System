@@ -29,6 +29,16 @@ public class StudentGrade extends Student {
 		this.remark = remark;
 	}
 	
+	public StudentGrade(String studentNo, String firstName, String lastName, String sectionCode, String subjectCode, String subjectDescription, 
+			String professorFacultyNo, String professorName) {
+		
+		super(studentNo, firstName, lastName, sectionCode);
+		this.subjectCode = subjectCode;
+		this.subjectDescription = subjectDescription;
+		this.professorFacultyNo = professorFacultyNo;
+		this.professorName = professorName;
+	}
+	
 	public String getStudentName() {
 		String studentName = getLastName()+", "+getFirstName();
 		return studentName;

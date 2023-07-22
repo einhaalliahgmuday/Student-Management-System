@@ -57,14 +57,30 @@ public class Admin {
 	/* This methods allows the professor to create a student record.
 	 * It receives a @Student object as a parameter, then throws it to "createStudentRecord()" method in @SQLData class.
 	 */
-	public void createStudentRecord(Student student) throws SQLException {
+	public void createStudentRecord(Student student) throws SQLException  {
 		sql.createStudentRecord(student);
+		
+		var facultyLoads = sql.getFacultyLoads();
+		
+		for (var facultyLoad : facultyLoads) {
+			if (facultyLoad.getSectionCode().equals(student.getSectionCode())) {
+				sql.createStudentGrade(new StudentGrade(student.getStudentNo(), student.getFirstName(), student.getLastName(),
+						student.getSectionCode(), facultyLoad.getSubjectCode(), facultyLoad.getSubjectDescription(), facultyLoad.getProfessorFacultyNo(), 
+						facultyLoad.getProfessorName()));
+			}
+		}
 	}
 	
-	/* This methods allows the professor to delete a student record.
+	/* This methods allows the admin to delete a student record.
 	 * It receives a @Student object as a parameter, then throws it to "deleteStudentRecord()" method in @SQLData class.
 	 */
 	public void deleteStudentRecord(Student student) throws SQLException {
 		sql.deleteStudentRecord(student);
+		
+		for (var studentGrade : sql.getStudentGrades()) {
+			if (studentGrade.getStudentNo().equals(student.getStudentNo())) {
+				sql.deleteStudentGrade(studentGrade);
+			}
+		}
 	}
 }

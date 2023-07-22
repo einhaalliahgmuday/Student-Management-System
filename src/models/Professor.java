@@ -29,7 +29,11 @@ public class Professor {
 		this.contactNo = contactNo;
 		
 		//When @Professor is instantiated, its faculty loads is automatically retrieved from the database.
-		facultyLoads = sql.getFacultyLoads(this.facultyNo);
+		for (var facultyLoad : sql.getFacultyLoads()) {
+			if (facultyLoad.getProfessorFacultyNo().equals(facultyNo)) {
+				facultyLoads.add(facultyLoad);
+			}
+		}
 	}
 	
 	public String getFacultyNo() {
@@ -50,6 +54,12 @@ public class Professor {
 	
 	public String getLastName() {
 		return lastName;
+	}
+	
+	public String getName() {
+		String name = firstName + " " + lastName;
+		
+		return name;
 	}
 	
 	public String getEmail() {

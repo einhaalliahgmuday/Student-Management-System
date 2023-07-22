@@ -21,6 +21,7 @@ public class FacultyLoad {
 	private int year;
 	private String semester;
 	private String professorFacultyNo;
+	private String professorName;
 	private String subjectCode, subjectDescription;
 	private String sectionCode;
 	private String schedule;
@@ -28,11 +29,12 @@ public class FacultyLoad {
 	private ArrayList<Student> classList;
 	private ArrayList<StudentGrade> gradingSheet;
 	
-	public FacultyLoad(int year, String semester, String professorFacultyNo, String subjectCode, String subjectDescription, 
-			String sectionCode, String schedule) throws SQLException {
+	public FacultyLoad(int year, String semester, String professorFacultyNo, String professorName, String subjectCode, 
+			String subjectDescription, String sectionCode, String schedule) throws SQLException {
 		this.year = year;
 		this.semester = semester;
 		this.professorFacultyNo = professorFacultyNo;
+		this.professorName = professorName;
 		this.subjectCode = subjectCode;
 		this.subjectDescription = subjectDescription;
 		this.sectionCode = sectionCode;
@@ -56,6 +58,10 @@ public class FacultyLoad {
 		return professorFacultyNo;
 	}
 	
+	public String getProfessorName() {
+		return professorName;
+	}
+	
 	public String getSubjectCode() {
 		return subjectCode;
 	}
@@ -73,6 +79,13 @@ public class FacultyLoad {
 	}
 	
 	public ArrayList<Student> getClassList() throws SQLException {
+		classList = sql.getClassList(sectionCode);
+		sortClassList();
+		
+		/* The value of ArrayList classList is updated everytime this method is called.
+		 * This is because the @Admin updates the students records and new students can be added in the class list.
+		 */
+		
 		return classList;
 	}
 	

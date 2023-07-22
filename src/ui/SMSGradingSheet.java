@@ -430,7 +430,7 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 		
 		//If no results found, the table will not refresh.
 		if (tblmdlGradingSheet.getRowCount() == 0) {
-			smsDialog.showMessageDialog(this, "No Results Found!");
+			smsDialog.showMessageDialog(this, "No Results Found");
 		}
 		else {
 			tblGradingSheet.setModel(tblmdlGradingSheet);
@@ -491,7 +491,7 @@ public class SMSGradingSheet extends JFrame implements ActionListener{
 					remark = "";
 				}
 				
-				if (midtermGrade > 5 || midtermGrade < 1 || finalsGrade > 5 || finalsGrade < 1) {
+				if (midtermGrade > 5 || midtermGrade < 0 || finalsGrade > 5 || finalsGrade < 0) {
 					/* If the inputs for midterm grade or finals grade is less than 1 or greater than 5, a dialog will display
 					 * which inform the professor of invalid input.
 					 */

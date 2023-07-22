@@ -68,8 +68,8 @@ public class SQLData {
 		return professors;
 	}
 	
-	public ArrayList<FacultyLoad> getFacultyLoads(String facultyNo) throws SQLException {
-		String selectStatement = "SELECT * FROM facultyload WHERE facultyno = '"+facultyNo+"'";
+	public ArrayList<FacultyLoad> getFacultyLoads() throws SQLException {
+		String selectStatement = "SELECT * FROM facultyload";
 		Statement statement = connection.createStatement();
 		ResultSet resultSet = statement.executeQuery(selectStatement);
 		
@@ -79,6 +79,7 @@ public class SQLData {
 					Integer.parseInt(resultSet.getString("year")),
 					resultSet.getString("semester"),
 					resultSet.getString("facultyno"), 
+					resultSet.getString("professorname"),
 					resultSet.getString("subjectcode"), 
 					resultSet.getString("subjectdescription"), 
 					resultSet.getString("sectioncode"), 
@@ -144,6 +145,36 @@ public class SQLData {
 		statement.close();
 	}
 	
+	public ArrayList<StudentGrade> getStudentGrades() throws SQLException {
+		String selectStatement = "SELECT * FROM studentgrade";
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(selectStatement);
+		
+		ArrayList<StudentGrade> studentGrades = new ArrayList<StudentGrade>();
+		
+		while(resultSet.next()) {
+			studentGrades.add(new StudentGrade(
+					resultSet.getString("studentno"),
+					resultSet.getString("firstname"),
+					resultSet.getString("lastname"),
+					resultSet.getString("sectioncode"), 
+					resultSet.getString("subjectcode"), 
+					resultSet.getString("subjectdescription"),
+					resultSet.getString("professorfacultyno"), 
+					resultSet.getString("professorname"), 
+					resultSet.getDouble("midtermgrade"), 
+					resultSet.getDouble("finalsgrade"), 
+					resultSet.getDouble("finalrating"), 
+					resultSet.getInt("totalattendance"), 
+					resultSet.getString("remark")));
+		}
+		
+		resultSet.close();
+		statement.close();
+		
+		return studentGrades;	
+	}
+	
 	public ArrayList<StudentGrade> getStudentGrades(String sectionCode, String subjectCode, String professorFacultyNo) throws SQLException {
 		String selectStatement = "SELECT * FROM studentgrade WHERE sectioncode = '"+sectionCode+"' AND subjectcode = '"+subjectCode+
 				"' AND professorfacultyno = '"+professorFacultyNo+"'";
@@ -175,6 +206,24 @@ public class SQLData {
 		return studentGrades;	
 	}
 	
+	public void createStudentGrade(StudentGrade studentGrade) throws SQLException {
+		String insertStatement = "INSERT INTO studentgrade (`studentno`, `firstname`, `lastname`, `sectioncode`, `subjectcode`, "
+				+ "`subjectdescription`, `professorfacultyno`, `professorname`) VALUES ('"+
+									studentGrade.getStudentNo()+"', '"+
+									studentGrade.getFirstName()+"', '"+
+									studentGrade.getLastName()+"', '"+ 
+									studentGrade.getSectionCode()+"', '"+
+									studentGrade.getSubjectCode()+"', '"+
+									studentGrade.getSubjectDescription()+"', '"+
+									studentGrade.getProfessorFacultyNo()+"', '"+
+									studentGrade.getProfessorName()+"')";
+		
+		Statement statement = connection.createStatement();
+		statement.executeUpdate(insertStatement);
+		
+		statement.close();
+	}
+	
 	public void updateStudentGrade(StudentGrade studentGrade) throws SQLException {
 		
 		String updateStatement = "UPDATE studentgrade SET midtermgrade = "+studentGrade.getMidtermGrade()+", finalsgrade = "+
@@ -182,6 +231,16 @@ public class SQLData {
 		", remark = '"+studentGrade.getRemark()+"' "+ "WHERE studentno = '"+studentGrade.getStudentNo()+"'";
 		Statement statement = connection.createStatement();
 		statement.executeUpdate(updateStatement);
+		
+		statement.close();
+	}
+	
+	public void deleteStudentGrade(StudentGrade studentGrade) throws SQLException {
+		String deleteStatement = "DELETE FROM studentgrade WHERE studentno = '"+ studentGrade.getStudentNo()+"' AND "
+				+ "subjectcode = '"+studentGrade.getSubjectCode() + "' AND professorfacultyno = '"+studentGrade.getProfessorFacultyNo()+"'" ;
+		
+		Statement statement = connection.createStatement();
+		statement.executeUpdate(deleteStatement);
 		
 		statement.close();
 	}

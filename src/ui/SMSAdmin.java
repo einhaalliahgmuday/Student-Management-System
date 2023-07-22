@@ -28,9 +28,9 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 	
 	// Components for the panel where student record is created
 	JPanel studentPnlAddStudent;
-	JLabel lblStudentNo, lblFirstName, lblMiddleName, lblLastName, lblSex, lblBirthday, lblSectionCode, 
+	JLabel lblFirstName, lblMiddleName, lblLastName, lblSex, lblBirthday, lblSectionCode, 
 			lblEmail, lblContactNo, lblAddress;
-	JTextField txtfldStudentNo, txtfldFirstName, txtfldMiddleName, txtfldLastName, txtfldBirthYear, 
+	JTextField txtfldFirstName, txtfldMiddleName, txtfldLastName, txtfldBirthYear, 
 				txtfldBirthMonth, txtfldBirthDay, txtfldEmail, txtfldContactNo, txtfldAddress;
 	JRadioButton rdbttnMale, rdbttnFemale;
 	ButtonGroup bttngrpSex;
@@ -93,63 +93,52 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		
 		//The panel for creating a student record
 		
-		lblStudentNo = new JLabel("Student No:");
-		lblStudentNo.setBounds(17, 42, 100, 22);
-		lblStudentNo.setFont(new Font("Tahoma", 1, 12));
-		lblStudentNo.setForeground(new Color(0, 0, 0));
-		
-		txtfldStudentNo = new JTextField();
-		txtfldStudentNo.setBounds(130, 42, 201, 22);
-		txtfldStudentNo.setBorder(new LineBorder(new Color(0, 0, 0)));
-		txtfldStudentNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtfldStudentNo.setForeground(new Color(0, 0, 0));
-		
 		lblFirstName = new JLabel("First Name:");
-		lblFirstName.setBounds(17, 76, 100, 22);
+		lblFirstName.setBounds(17, 56, 100, 22);
 		lblFirstName.setFont(new Font("Tahoma", 1, 12));
 		lblFirstName.setForeground(new Color(0, 0, 0));
 		
 		txtfldFirstName = new JTextField();
-		txtfldFirstName.setBounds(130, 76, 201, 22);
+		txtfldFirstName.setBounds(130, 56, 201, 22);
 		txtfldFirstName.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldFirstName.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldFirstName.setForeground(new Color(0, 0, 0));
 		
 		lblMiddleName = new JLabel("Middle Name:");
-		lblMiddleName.setBounds(17, 108, 100, 22);
+		lblMiddleName.setBounds(17, 88, 100, 22);
 		lblMiddleName.setFont(new Font("Tahoma", 1, 12));
 		lblMiddleName.setForeground(new Color(0, 0, 0));
 		
 		txtfldMiddleName = new JTextField();
-		txtfldMiddleName.setBounds(130, 108, 201, 22);
+		txtfldMiddleName.setBounds(130, 88, 201, 22);
 		txtfldMiddleName.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldMiddleName.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldMiddleName.setForeground(new Color(0, 0, 0));
 		
 		lblLastName = new JLabel("Last Name:");
-		lblLastName.setBounds(17, 140, 100, 22);
+		lblLastName.setBounds(17, 120, 100, 22);
 		lblLastName.setFont(new Font("Tahoma", 1, 12));
 		lblLastName.setForeground(new Color(0, 0, 0));
 		
 		txtfldLastName = new JTextField();
-		txtfldLastName.setBounds(130, 140, 201, 22);
+		txtfldLastName.setBounds(130, 120, 201, 22);
 		txtfldLastName.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldLastName.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldLastName.setForeground(new Color(0, 0, 0));
 		
 		lblSex = new JLabel("Sex: ");
-		lblSex.setBounds(17, 172, 100, 22);
+		lblSex.setBounds(17, 152, 100, 22);
 		lblSex.setFont(new Font("Tahoma", 1, 12));
 		lblSex.setForeground(new Color(0, 0, 0));
 		
 		rdbttnMale = new JRadioButton("Male");
-		rdbttnMale.setBounds(130, 172, 100, 22);
+		rdbttnMale.setBounds(130, 152, 100, 22);
 		rdbttnMale.setBackground(null);
 		rdbttnMale.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbttnMale.setForeground(new Color(0, 0, 0));
 		
 		rdbttnFemale = new JRadioButton("Female");
-		rdbttnFemale.setBounds(240, 172, 100, 22);
+		rdbttnFemale.setBounds(240, 152, 100, 22);
 		rdbttnFemale.setBackground(null);
 		rdbttnFemale.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rdbttnFemale.setForeground(new Color(0, 0, 0));
@@ -159,72 +148,72 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		bttngrpSex.add(rdbttnFemale);
 		
 		lblBirthday = new JLabel("Birthday (yyyy/mm/dd):                  /           /");
-		lblBirthday.setBounds(17, 204, 300, 22);
+		lblBirthday.setBounds(17, 184, 300, 22);
 		lblBirthday.setBackground(null);
 		lblBirthday.setFont(new Font("Tahoma", 1, 12));
 		lblBirthday.setForeground(new Color(0, 0, 0));
 		
 		txtfldBirthYear = new JTextField();
-		txtfldBirthYear.setBounds(181, 204, 50, 22);
+		txtfldBirthYear.setBounds(181, 184, 50, 22);
 		txtfldBirthYear.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldBirthYear.setHorizontalAlignment(JTextField.CENTER);
 		txtfldBirthYear.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldBirthYear.setForeground(new Color(0, 0, 0));
 		
 		txtfldBirthMonth = new JTextField();
-		txtfldBirthMonth.setBounds(251, 204, 30, 22);
+		txtfldBirthMonth.setBounds(251, 184, 30, 22);
 		txtfldBirthMonth.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldBirthMonth.setHorizontalAlignment(JTextField.CENTER);
 		txtfldBirthMonth.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldBirthMonth.setForeground(new Color(0, 0, 0));
 		
 		txtfldBirthDay = new JTextField();
-		txtfldBirthDay.setBounds(301, 204, 30, 22);
+		txtfldBirthDay.setBounds(301, 184, 30, 22);
 		txtfldBirthDay.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldBirthDay.setHorizontalAlignment(JTextField.CENTER);
 		txtfldBirthDay.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldBirthDay.setForeground(new Color(0, 0, 0));
 		
 		lblSectionCode = new JLabel("Section Code:");
-		lblSectionCode.setBounds(17, 236, 100, 22);
+		lblSectionCode.setBounds(17, 216, 100, 22);
 		lblSectionCode.setFont(new Font("Tahoma", 1, 12));
 		lblSectionCode.setForeground(new Color(0, 0, 0));
 		
 		String[] sectionCodes = {"----SELECT----", "BSIT 2-1", "DICT 2-1"};
 		cmbbxSectionCode = new JComboBox(sectionCodes);
-		cmbbxSectionCode.setBounds(130, 236, 100, 22);
+		cmbbxSectionCode.setBounds(130, 216, 100, 22);
 		cmbbxSectionCode.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cmbbxSectionCode.setForeground(new Color(0, 0, 0));
 		
 		lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(17, 268, 100, 22);
+		lblEmail.setBounds(17, 248, 100, 22);
 		lblEmail.setFont(new Font("Tahoma", 1, 12));
 		lblEmail.setForeground(new Color(0, 0, 0));
 		
 		txtfldEmail = new JTextField();
-		txtfldEmail.setBounds(130, 268, 201, 22);
+		txtfldEmail.setBounds(130, 248, 201, 22);
 		txtfldEmail.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldEmail.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldEmail.setForeground(new Color(0, 0, 0));
 		
 		lblContactNo = new JLabel("Contact No:");
-		lblContactNo.setBounds(17, 298, 100, 22);
+		lblContactNo.setBounds(17, 278, 100, 22);
 		lblContactNo.setFont(new Font("Tahoma", 1, 12));
 		lblContactNo.setForeground(new Color(0, 0, 0));
 		
 		txtfldContactNo = new JTextField();
-		txtfldContactNo.setBounds(130, 298, 201, 22);
+		txtfldContactNo.setBounds(130, 278, 201, 22);
 		txtfldContactNo.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldContactNo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldContactNo.setForeground(new Color(0, 0, 0));
 		
 		lblAddress = new JLabel("Address:");
-		lblAddress.setBounds(17, 330, 100, 22);
+		lblAddress.setBounds(17, 310, 100, 22);
 		lblAddress.setFont(new Font("Tahoma", 1, 12));
 		lblAddress.setForeground(new Color(0, 0, 0));
 		
 		txtfldAddress = new JTextField();
-		txtfldAddress.setBounds(130, 330, 201, 22);
+		txtfldAddress.setBounds(130, 310, 201, 22);
 		txtfldAddress.setBorder(new LineBorder(new Color(0, 0, 0)));
 		txtfldAddress.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtfldAddress.setForeground(new Color(0, 0, 0));
@@ -245,8 +234,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		studentPnlAddStudent.setBounds(6, 4, 350, 480);
 		studentPnlAddStudent.setLayout(null);
 		studentPnlAddStudent.setBackground(new Color(245, 225, 187));
-		studentPnlAddStudent.add(lblStudentNo);
-		studentPnlAddStudent.add(txtfldStudentNo);
 		studentPnlAddStudent.add(lblFirstName);
 		studentPnlAddStudent.add(txtfldFirstName);
 		studentPnlAddStudent.add(lblMiddleName);
@@ -452,7 +439,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 		
 		//If no results found, the table will not refresh.
 		if (tblmdlStudentRecords.getRowCount() == 0) {
-			smsDialog.showMessageDialog(this, "No Results Found!");
+			smsDialog.showMessageDialog(this, "No Results Found");
 		}
 		else {
 			tblStudentRecords.setModel(tblmdlStudentRecords);
@@ -544,9 +531,8 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			}
 			
 			//These are the conditions for adding a student.
-			if (txtfldStudentNo.getText().trim().isEmpty() || txtfldFirstName.getText().trim().isEmpty() || 
-					txtfldLastName.getText().trim().isEmpty() || sex.trim().isEmpty() || txtfldBirthYear.getText().trim().isEmpty() || 
-					txtfldBirthMonth.getText().trim().isEmpty() || txtfldBirthDay.getText().trim().isEmpty() ||
+			if (txtfldFirstName.getText().trim().isEmpty() || txtfldLastName.getText().trim().isEmpty() || sex.trim().isEmpty() || 
+					txtfldBirthYear.getText().trim().isEmpty() || txtfldBirthMonth.getText().trim().isEmpty() || txtfldBirthDay.getText().trim().isEmpty() ||
 					cmbbxSectionCode.getSelectedItem().toString().equals("----SELECT----")) {		
 				
 				/*
@@ -556,14 +542,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 				
 				smsDialog.showMessageDialog(this, "No Student Added", "Please fill-in the necessary information.");
 			}
-			else if (txtfldStudentNo.getText().length() < 15) {
-				
-				/* If the student number input is less than 15, which is the precise length, a dialog will
-				 * appear that the student number is invalid.
-				 */
-				
-				smsDialog.showMessageDialog(this, "Invalid Student Number", "Please enter a valid student number.");
-			}
 			else {
 				
 				//If all conditions are met, it will try to add the student, while catching the possible Exceptions.
@@ -572,15 +550,14 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					/*The inputs are used to instantiate a @Student, which will be thrown as parameter in "createStudentRecord()"
 					 * method of the admin.
 					 */
-					student = new Student(txtfldStudentNo.getText(), txtfldFirstName.getText(), txtfldMiddleName.getText(), 
+					student = new Student(studentRecords.generateStudentNo(), txtfldFirstName.getText(), txtfldMiddleName.getText(), 
 							txtfldLastName.getText(), sex, Date.valueOf(birthday), cmbbxSectionCode.getSelectedItem().toString(), 
 							txtfldEmail.getText(), txtfldContactNo.getText(), txtfldAddress.getText());
 					
 					admin.createStudentRecord(student);		//This is the code that creates the student record.
-					smsDialog.showMessageDialog(this, "Student Record Created");	//If the student is successfully created, a dialog will inform the admin.
+					smsDialog.showMessageDialog(this, "Student Record Created", ("Student No: "+student.getStudentNo()));	//If the student is successfully created, a dialog will inform the admin.
 					
 					// The textfields are cleared.
-					txtfldStudentNo.setText(""); 
 					txtfldFirstName.setText(""); 
 					txtfldMiddleName.setText(""); 
 					txtfldLastName.setText("");
@@ -596,13 +573,9 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					//The table model is set to "ALL", and the table is refreshed.
 					tableModel = TableModel.ALL;
 					displayStudentRecordsTable();
-				} catch (SQLIntegrityConstraintViolationException e1) {		
-					/* This catches a duplicate student number, that is, if the student number already
-					 * exists in the system. When this Exception occurs, a dialog will inform the admin.
-					 */
-					smsDialog.showMessageDialog(this, "Duplicate Student Number", "The student number you entered already", "exists.");
 				} catch (SQLException e1) {
-					//This catches all other SQL Exceptions.
+					//This catches all other SQL Exceptions, and displays a dialog.
+					smsDialog.showMessageDialog(this, "Student Not Created", "Please make sure you entered valid", "information.");
 					e1.printStackTrace();
 				} catch (Exception e1) {
 					//This catches all other Exceptions, and displays a dialog.
@@ -613,7 +586,6 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 			}
 		}
 		else if (e.getSource() == bttnClear) {		//This action clears the inputs in creating a student record.
-			txtfldStudentNo.setText(""); 
 			txtfldFirstName.setText(""); 
 			txtfldMiddleName.setText(""); 
 			txtfldLastName.setText("");
@@ -667,6 +639,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					 */
 					admin.deleteStudentRecord(student);
 					smsDialog.showMessageDialog(this, "Student Record Deleted");
+					tableModel = TableModel.ALL;
 					displayStudentRecordsTable();
 					
 					student = null;

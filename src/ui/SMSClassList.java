@@ -257,7 +257,7 @@ public class SMSClassList extends JFrame implements ActionListener {
 		
 		//If no results found, the table will not refresh.
 		if (tblmdlClassList.getRowCount() == 0) {
-			smsDialog.showMessageDialog(this, "No Results Found!");
+			smsDialog.showMessageDialog(this, "No Results Found");
 		}
 		else {
 			tblClassList.setModel(tblmdlClassList);

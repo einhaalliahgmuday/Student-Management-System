@@ -155,7 +155,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 				}
 				else {
 					//This is the dialog that displays when login fails.
-					smsDialogs.showMessageDialog(this, "Login Failed!", "You entered an invalid ID or password.");
+					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -174,7 +174,7 @@ public class SMSLogin extends JFrame implements ActionListener {
 				}
 				else {
 					//This is the dialog that displays when login fails.
-					smsDialogs.showMessageDialog(this, "Login Failed!", "You entered an invalid ID or password.");
+					smsDialogs.showMessageDialog(this, "Login Failed", "You entered an invalid ID or password.");
 				}
 			} catch (SQLException e1) {
 				e1.printStackTrace();
