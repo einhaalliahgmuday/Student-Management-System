@@ -638,7 +638,7 @@ public class SMSAdmin extends JFrame implements ActionListener, SMSUser {
 					 * Then, the table is refreshed by calling the "displayStudentRecordsTable()" method.
 					 */
 					admin.deleteStudentRecord(student);
-					smsDialog.showMessageDialog(this, "Student Record Deleted");
+					smsDialog.showMessageDialog(this, "Student Record Deleted", ("Student No: ")+student.getStudentNo().toString());
 					tableModel = TableModel.ALL;
 					displayStudentRecordsTable();
 					

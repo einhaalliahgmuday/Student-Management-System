@@ -15,7 +15,7 @@ public class Professor {
 	private String firstName, middleName, lastName;
 	private String email, contactNo;
 	
-	private ArrayList<FacultyLoad> facultyLoads;
+	private ArrayList<FacultyLoad> facultyLoads = new ArrayList<FacultyLoad>();
 	
 	public Professor(String facultyNo, String password, String firstName, String middleName, String lastName, 
 			String email, String contactNo) throws SQLException {
